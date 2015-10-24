@@ -133,8 +133,12 @@
 (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 
 ;; set theme
-(if (display-graphic-p)
-    (load-theme 'monokai t))
+;;(if (display-graphic-p)
+;;    (load-theme 'monokai t))
+;; neotree displays correctly on dark background terminal
+;; with this theme
+(load-theme 'monokai t)
+
 
 ;; turn-off emacs beeping.
 ;; Ref: http://www.emacswiki.org/emacs/AlarmBell
