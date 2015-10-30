@@ -142,3 +142,14 @@
 (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-S-d") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-d") 'mc/mark-all-like-this)
+
+;; defining my own minor mode for key overrides
+(defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
+
+(define-key my-keys-minor-mode-map (kbd "C-d") 'mc/mark-next-like-this)
+
+(define-minor-mode my-keys-minor-mode
+  "A minor mode so that my key settings override annoying major modes."
+  t " my-keys" 'my-keys-minor-mode-map)
+
+(my-keys-minor-mode 1)
