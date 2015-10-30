@@ -1,7 +1,5 @@
-(require 'package)
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
-(package-initialize)
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
 
 ;; projectile doesn't work on welcome screen (projectile bug)
 (setq inhibit-startup-screen t)
@@ -13,20 +11,6 @@
       scroll-step 1
       scroll-conservatively 10000
       scroll-preserve-screen-position 1)
-
-;; Required packages
-;;; everytime emacs starts, it will automatically check if those packages are
-;;; missing, it will install them automatically
-(when (not package-archive-contents)
-  (package-refresh-contents))
-(defvar ngupta/packages
-  '(helm helm-projectile helm-gtags helm-git-grep
-         go-mode company company-go flycheck exec-path-from-shell
-         neotree web-mode monokai-theme neotree
-         js2-mode multiple-cursors))
-(dolist (p ngupta/packages)
-  (when (not (package-installed-p p))
-        (package-install p)))
 
 (set-face-attribute 'region nil
                     :background "lightblue"
@@ -53,8 +37,11 @@
  helm-gtags-pulse-at-cursor t
  helm-gtags-prefix-key "\C-cg"
  helm-gtags-suggested-key-mapping t
- )
+)
 
+;; without this explicit require, I get this error:
+;; Symbol's value as variable is void: helm-gtags-mode-map
+;; during init.el loading during emacs startup
 (require 'helm-gtags)
 (add-hook 'c-mode-hook 'helm-gtags-mode)
 (add-hook 'c++-mode-hook 'helm-gtags-mode)
