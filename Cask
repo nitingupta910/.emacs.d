@@ -36,4 +36,4 @@
 (depends-on "web-mode")
 (depends-on "monokai-theme")
 (depends-on "js2-mode")
-
+(depends-on "swift-mode")
