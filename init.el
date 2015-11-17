@@ -4,6 +4,9 @@
 ;; projectile doesn't work on welcome screen (projectile bug)
 (setq inhibit-startup-screen t)
 
+;; hide tool bar
+(tool-bar-mode -1)
+
 ;; for smooth scrolling and disabling the automatic
 ;; recentering of emacs when moving the cursor
 (setq redisplay-dont-pause t
