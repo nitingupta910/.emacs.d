@@ -129,6 +129,8 @@
 ;; with this theme
 (load-theme 'monokai t)
 
+;; show column number
+(column-number-mode t)
 
 ;; turn-off emacs beeping.
 ;; Ref: http://www.emacswiki.org/emacs/AlarmBell
@@ -164,3 +166,23 @@
       kept-new-versions 6
       kept-old-versions 2
       version-control t)
+
+;; js2-mode
+;;(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-mode))
+;;(add-to-list 'auto-mode-alist '("\\.tsx\\'" . js2-mode))
+
+;; typescript
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+
+;; typescript: tslint flycheck integration
+(require 'flycheck)
+(flycheck-define-checker tslint
+  "Use tslint to flycheck TypeScript code."
+  :command ("tslint"
+            "-f" source
+            "-c" (eval (projectile-expand-root "tslint.json"))
+            "-t" "prose")
+  :error-patterns ((warning (file-name) "[" line ", " column "]: " (message)))
+  :modes typescript-mode)
+(add-to-list 'flycheck-checkers 'tslint)
+
