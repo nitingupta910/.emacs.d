@@ -36,3 +36,5 @@
 (depends-on "monokai-theme")
 (depends-on "js2-mode")
 (depends-on "swift-mode")
+(depends-on "less-css-mode")
+(depends-on "flymake-less")
