@@ -124,7 +124,7 @@
   (exec-path-from-shell-copy-env "PATH"))
   
 ;; set font size
-(set-face-attribute 'default nil :height 180)
+(set-face-attribute 'default nil :height 140)
 
 ;; remote path
 (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
@@ -213,3 +213,6 @@
   (c-toggle-auto-hungry-state 1))
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
+
+; disable autosave
+(setq auto-save-default nil)
