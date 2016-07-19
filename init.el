@@ -11,7 +11,7 @@
 (setq inhibit-startup-screen t)
 
 ;; hide tool bar
-(tool-bar-mode -1)
+;(tool-bar-mode -1)
 
 ;; for smooth scrolling and disabling the automatic
 ;; recentering of emacs when moving the cursor
