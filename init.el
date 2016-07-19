@@ -124,7 +124,7 @@
   (exec-path-from-shell-copy-env "PATH"))
   
 ;; set font size
-(set-face-attribute 'default nil :height 140)
+(set-face-attribute 'default nil :height 180)
 
 ;; remote path
 (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
