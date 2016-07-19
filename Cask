@@ -38,3 +38,7 @@
 (depends-on "swift-mode")
 (depends-on "less-css-mode")
 (depends-on "flymake-less")
+(depends-on "elm-mode")
+(depends-on "flycheck-elm")
+(depends-on "company")
+(depends-on "elm-oracle")
