@@ -1,4 +1,3 @@
-
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -103,6 +102,7 @@
 ;;
 ;;(add-hook 'after-init-hook 'global-company-mode)
 
+;;----------------------
 ;; golang
 (add-hook 'before-save-hook 'gofmt-before-save)
 
@@ -216,3 +216,16 @@
 
 ; disable autosave
 (setq auto-save-default nil)
+
+;;-----------------
+;; ELM
+(require 'elm-mode)
+
+(add-hook 'flycheck-mode-hook 'flycheck-elm-setup)
+(add-hook 'elm-mode-hook
+          (lambda ()
+            (setq company-backends '(company-elm))))
+;            (set (make-local-variable 'company-backends) '(company-elm))))
+
+(add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
+(setq elm-format-on-save t)
