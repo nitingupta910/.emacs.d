@@ -36,7 +36,7 @@
 (define-key helm-map (kbd "C-z") 'helm-select-action)
 
 ;; projectile
-;;(projectile-global-mode)
+(projectile-global-mode)
 
 ;; helm-gtags (does not seems to work correct over tramp)
 (setq

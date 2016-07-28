@@ -41,3 +41,4 @@
 (depends-on "elm-mode")
 (depends-on "flycheck-elm")
 (depends-on "company")
+(depends-on "sml-mode")
