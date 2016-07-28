@@ -56,6 +56,20 @@
 ;; Symbol's value as variable is void: helm-gtags-mode-map
 ;; during init.el loading during emacs startup
 (require 'helm-gtags)
+
+(setq helm-gtags-pulse-at-cursor nil)
+(set-face-attribute 'helm-selection nil
+                    :background "yellow"
+                    :foreground "black")
+;; start-face is all gets displayed in terminal mode
+;; for ref. the other face is: pulse-higlight-face
+;; To get list of all face available:
+;;    M-x helm-colors RET
+(set-face-attribute 'pulse-highlight-start-face nil
+                    :background "green"
+                    :foreground "white")
+
+
 (add-hook 'c-mode-hook 'helm-gtags-mode)
 (add-hook 'c++-mode-hook 'helm-gtags-mode)
 (add-hook 'asm-mode-hook 'helm-gtags-mode)
