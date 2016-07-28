@@ -36,7 +36,11 @@
 (define-key helm-map (kbd "C-z") 'helm-select-action)
 
 ;; projectile
+;; HACK: projectile causes slowdown when editing files over sshfs
+;; See: https://github.com/bbatsov/projectile/issues/657
 (projectile-global-mode)
+(setq projectile-mode-line "foo")
+
 
 ;; helm-gtags (does not seems to work correct over tramp)
 (setq
@@ -122,7 +126,7 @@
   (exec-path-from-shell-copy-env "PATH"))
   
 ;; set font size
-(set-face-attribute 'default nil :height 180)
+(set-face-attribute 'default nil :height 140)
 
 ;; remote path
 (add-to-list 'tramp-remote-path 'tramp-own-remote-path)

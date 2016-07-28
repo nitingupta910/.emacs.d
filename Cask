@@ -42,3 +42,4 @@
 (depends-on "flycheck-elm")
 (depends-on "company")
 (depends-on "sml-mode")
+(depends-on "markdown-mode")
