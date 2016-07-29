@@ -25,6 +25,13 @@
                     :background "lightblue"
                     :foreground "black")
 
+;; Hide GUI elements
+(when window-system
+  (tool-bar-mode -1)
+  (toggle-scroll-bar -1)
+  (menu-bar-mode 1)
+)
+
 ;; helm
 (helm-mode 1)
 (set-face-attribute 'helm-selection nil
@@ -245,3 +252,25 @@
 
 (add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
 (setq elm-format-on-save t)
+
+;; Org mode
+;; (add-hook 'org-mode-hook
+;;           (lambda ()
+;;             (variable-pitch-mode t)
+;;             (custom-set-faces
+;;              '(default ((t (:inherit nil :stipple nil :background "white smoke" :foreground "dim gray" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 143 :width normal :foundry "DAMA" :family "Ubuntu Mono"))))
+;;              )))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-level-1 ((t (:inherit variable-pitch :foreground "tan" :height 1.0))))
+ '(org-level-2 ((t (:inherit variable-pitch :foreground "#A6E22E" :height 1.0)))))
