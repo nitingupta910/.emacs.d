@@ -162,6 +162,13 @@
 ;; set font size
 (set-face-attribute 'default nil :height 140)
 
+;; SCSS
+(add-hook 'scss-mode-hook
+          (lambda()
+            (flycheck-mode)
+            (setq css-indent-offset 2)
+            ))
+
 ;; remote path
 (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 

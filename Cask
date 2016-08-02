@@ -43,3 +43,4 @@
 (depends-on "company")
 (depends-on "sml-mode")
 (depends-on "markdown-mode")
+(depends-on "scss-mode")
