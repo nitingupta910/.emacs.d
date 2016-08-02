@@ -267,6 +267,8 @@
 (setq elm-format-on-save t)
 
 ;; Org mode
+(setq org-support-shift-select 1)
+
 ;; (add-hook 'org-mode-hook
 ;;           (lambda ()
 ;;             (variable-pitch-mode t)
