@@ -11,10 +11,10 @@
 (setq inhibit-startup-screen t)
 
 ;; See: https://www.quora.com/profile/Stefan-Bucur/Posts/Enabling-Soft-Word-Wrap-in-Emacs
-(setq visual-line-mode t)
+(visual-line-mode 1)
 
-;; hide tool bar
-;(tool-bar-mode -1)
+(show-paren-mode 1)
+(setq show-paren-delay 0)
 
 ;; for smooth scrolling and disabling the automatic
 ;; recentering of emacs when moving the cursor
