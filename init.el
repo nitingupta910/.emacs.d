@@ -10,6 +10,9 @@
 ;; projectile doesn't work on welcome screen (projectile bug)
 (setq inhibit-startup-screen t)
 
+;; See: https://www.quora.com/profile/Stefan-Bucur/Posts/Enabling-Soft-Word-Wrap-in-Emacs
+(setq visual-line-mode t)
+
 ;; hide tool bar
 ;(tool-bar-mode -1)
 
