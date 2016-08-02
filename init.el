@@ -167,6 +167,8 @@
           (lambda()
             (flycheck-mode)
             (setq css-indent-offset 2)
+            (company-mode)
+            (company-css)
             ))
 
 ;; remote path
