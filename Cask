@@ -44,3 +44,4 @@
 (depends-on "sml-mode")
 (depends-on "markdown-mode")
 (depends-on "scss-mode")
+(depends-on "helm-dash")

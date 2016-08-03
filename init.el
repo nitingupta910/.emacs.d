@@ -60,7 +60,8 @@
 ;; See: http://tuhdo.github.io/helm-projectile.html
 (setq projectile-enable-caching t)
 
-
+;; helm-dash
+(setq helm-dash-browser-func 'eww)
 
 ;; helm-gtags (does not seems to work correct over tramp)
 (setq
