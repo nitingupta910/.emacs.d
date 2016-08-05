@@ -45,3 +45,4 @@
 (depends-on "markdown-mode")
 (depends-on "scss-mode")
 (depends-on "helm-dash")
+(depends-on "haskell-mode")
