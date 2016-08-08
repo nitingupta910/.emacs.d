@@ -35,6 +35,15 @@
   (menu-bar-mode 1)
 )
 
+;; Source: http://www.emacswiki.org/emacs-en/download/misc-cmds.el
+;; Also see: http://emacs.stackexchange.com/questions/169/how-do-i-reload-a-file-in-a-buffer
+(defun revert-buffer-confirm-if-modified ()
+  "Revert buffer without confirmation."
+  (interactive)
+  (revert-buffer t (not (buffer-modified-p)) t))
+
+(global-set-key (kbd "C-c r") 'revert-buffer-confirm-if-modified)
+
 ;; helm
 (helm-mode 1)
 (global-set-key (kbd "M-x") #'helm-M-x)
