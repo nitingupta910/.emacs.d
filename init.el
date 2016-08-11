@@ -280,7 +280,8 @@
 (add-hook 'elm-mode-hook
            (lambda ()
              (set (make-local-variable 'company-backends) '(company-elm))
-             (company-mode)))
+             (company-mode)
+             (flycheck-mode)))
 
 ;;(with-eval-after-load 'company
 ;;  (add-to-list 'company-backends 'company-elm))
