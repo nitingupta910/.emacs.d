@@ -16,6 +16,18 @@
 (show-paren-mode 1)
 (setq show-paren-delay 0)
 
+;; PuTTY fix. Ugly. Bad. But it works. (Good)
+;; Even when TERM=xterm-256color on bash and
+;; ~/.tmux.conf says:
+;;   set-window-option -g xterm-keys on
+;;   set -g default-terminal "xterm-256color"
+;; still, pressing <end> key results in error:
+;;   <select> is undefined
+;; This hack fixes the end key. Home key already
+;; worked on Linux/tmux (don't know about putty)
+(define-key global-map "\M-[1~" 'beginning-of-line)
+(define-key global-map [select] 'end-of-line)
+
 ;; for smooth scrolling and disabling the automatic
 ;; recentering of emacs when moving the cursor
 (setq redisplay-dont-pause t
