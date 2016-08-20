@@ -46,3 +46,5 @@
 (depends-on "scss-mode")
 (depends-on "helm-dash")
 (depends-on "haskell-mode")
+(depends-on "rust-mode")
+(depends-on "flycheck-rust")
