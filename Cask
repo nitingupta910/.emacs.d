@@ -48,3 +48,4 @@
 (depends-on "haskell-mode")
 (depends-on "rust-mode")
 (depends-on "flycheck-rust")
+(depends-on "cargo")
