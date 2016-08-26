@@ -186,7 +186,9 @@
 
 (defun my-go-mode-hook ()
   ; Godef jump key binding                                                      
-  (local-set-key (kbd "M-.") 'godef-jump))
+  (local-set-key (kbd "M-.") 'godef-jump)
+  (local-set-key (kbd "M-,") 'pop-tag-mark))
+
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 ;; fix environment variables from launching emacs GUI
@@ -306,6 +308,8 @@
 (add-hook 'elm-mode-hook
            (lambda ()
              (set (make-local-variable 'company-backends) '(company-elm))
+             (local-set-key (kbd "M-.") 'elm-mode-goto-tag-at-point)
+             (local-set-key (kbd "M-,") 'pop-tag-mark)
              (company-mode)
              (flycheck-mode)))
 
