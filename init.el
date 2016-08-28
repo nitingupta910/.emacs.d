@@ -45,7 +45,7 @@
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
   (menu-bar-mode 1)
-)
+  )
 
 ;; Show current file name using C-x C-p
 ;; Source: https://camdez.com/blog/2013/11/14/emacs-show-buffer-file-name/
@@ -106,7 +106,7 @@
  helm-gtags-pulse-at-cursor t
  helm-gtags-prefix-key "\C-cg"
  helm-gtags-suggested-key-mapping t
-)
+ )
 
 ;; without this explicit require, I get this error:
 ;; Symbol's value as variable is void: helm-gtags-mode-map
@@ -185,7 +185,6 @@
 (add-hook 'go-mode-hook 'flycheck-mode)
 
 (defun my-go-mode-hook ()
-  ; Godef jump key binding                                                      
   (local-set-key (kbd "M-.") 'godef-jump)
   (local-set-key (kbd "M-,") 'pop-tag-mark))
 
@@ -196,7 +195,7 @@
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-copy-env "PATH"))
-  
+
 ;; set font size
 (set-face-attribute 'default nil :height 140)
 
@@ -218,6 +217,7 @@
 ;; neotree displays correctly on dark background terminal
 ;; with this theme
 (load-theme 'monokai t)
+;(load-theme 'darktooth t)
 
 ;; show column number
 (column-number-mode t)
@@ -257,6 +257,11 @@
       kept-old-versions 2
       version-control t)
 
+(defun indent-buffer ()
+  "Indent current buffer according to major mode."
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
 ;; js2-mode
 ;;(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-mode))
 ;;(add-to-list 'auto-mode-alist '("\\.tsx\\'" . js2-mode))
@@ -278,7 +283,7 @@
 
 
 ;; recognize files ending with .h as c++ files
-;(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+                                        ;(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 ;; style I want to use in c++ mode
 ;; (source: http://www.emacswiki.org/emacs/CPlusPlusMode)
@@ -297,7 +302,7 @@
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 
-; disable autosave
+                                        ; disable autosave
 (setq auto-save-default nil)
 
 ;;-----------------
@@ -306,18 +311,34 @@
 
 (add-hook 'flycheck-mode-hook 'flycheck-elm-setup)
 (add-hook 'elm-mode-hook
-           (lambda ()
-             (set (make-local-variable 'company-backends) '(company-elm))
-             (local-set-key (kbd "M-.") 'elm-mode-goto-tag-at-point)
-             (local-set-key (kbd "M-,") 'pop-tag-mark)
-             (company-mode)
-             (flycheck-mode)))
+          (lambda ()
+            (set (make-local-variable 'company-backends) '(company-elm))
+            (local-set-key (kbd "M-.") 'elm-mode-goto-tag-at-point)
+            (local-set-key (kbd "M-,") 'pop-tag-mark)
+            (company-mode)
+            (flycheck-mode)))
 
 ;;(with-eval-after-load 'company
 ;;  (add-to-list 'company-backends 'company-elm))
 (add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
 
 (setq elm-format-on-save t)
+
+;;-----------------
+;; Rust
+(require 'rust-mode)
+
+(add-hook 'rust-mode-hook
+          (lambda ()
+            (racer-mode)
+            (cargo-minor-mode)
+            (flycheck-mode)
+            (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)))
+
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
 ;; Org mode
 (setq org-support-shift-select 1)
