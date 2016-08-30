@@ -52,3 +52,4 @@
 (depends-on "flycheck-rust")
 (depends-on "cargo")
 (depends-on "racer")
+(depends-on "coffee-mode")
