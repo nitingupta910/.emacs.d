@@ -125,6 +125,13 @@
                     :background "green"
                     :foreground "white")
 
+;; Treat .h files as C++ files unless overridden by dir specific config
+;; To use c-mode for .h files for a particular project (dir), create
+;; .dir-locals.el in that dir with this line:
+;;   ((c++-mode . ((mode . c))))
+;; (Source: http://stackoverflow.com/questions/3312114/how-to-tell-emacs-to-open-h-file-in-c-mode)
+;; (See second answer)
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 (add-hook 'c-mode-hook 'helm-gtags-mode)
 (add-hook 'c++-mode-hook 'helm-gtags-mode)
@@ -154,9 +161,6 @@
 
 ;; indentation (linux kernel style)
 (setq c-default-style "linux")
-
-;; Open header file in C mode
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c-mode))
 
 ;; helm-git-grep
 (global-set-key (kbd "C-c g") 'helm-git-grep)
@@ -298,7 +302,10 @@
 (defun my-c++-mode-hook ()
   (c-set-style "my-style")        ; use my-style defined above
   (auto-fill-mode)
-  (c-toggle-auto-hungry-state 1))
+  (company-mode)
+  (flycheck-mode)
+  (semantic-mode)
+  (c-toggle-hungry-state 1))
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 
