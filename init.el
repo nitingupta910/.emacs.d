@@ -285,10 +285,10 @@
   :modes typescript-mode)
 (add-to-list 'flycheck-checkers 'tslint)
 
-
-;; recognize files ending with .h as c++ files
-                                        ;(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
+;; ============
+;; C++
+;; ============
+;;
 ;; style I want to use in c++ mode
 ;; (source: http://www.emacswiki.org/emacs/CPlusPlusMode)
 (c-add-style "my-style"
@@ -299,21 +299,51 @@
                                    (brace-list-open . 0)
                                    (statement-case-open . +)))))
 
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+(require 'flycheck-irony)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
+(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+
+(defun my-company-irony-setup ()
+  (setq company-backends (delete 'company-semantic company-backends))
+  (eval-after-load 'company
+    '(add-to-list
+      'company-backends 'company-irony)))
+
+(setq irony-additional-clang-options '("-std=c++14"))
+
 (defun my-c++-mode-hook ()
   (c-set-style "my-style")        ; use my-style defined above
-  (auto-fill-mode)
-  (company-mode)
+  (irony-mode)
   (flycheck-mode)
-  (semantic-mode)
+  (company-mode)
+  (my-company-irony-setup)
   (c-toggle-hungry-state 1))
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 
-                                        ; disable autosave
+;; =============
+;; CMake
+;; =============
+(cmake-ide-setup)
+
+; disable autosave
 (setq auto-save-default nil)
 
-;;-----------------
+;; =============
 ;; Elm
+;; =============
+;;
 (require 'elm-mode)
 
 (add-hook 'flycheck-mode-hook 'flycheck-elm-setup)
