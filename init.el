@@ -16,6 +16,12 @@
 (show-paren-mode 1)
 (setq show-paren-delay 0)
 
+;; We don't want to type yes and no all the time so, do y and n
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+; disable autosave
+(setq auto-save-default nil)
+
 ;; PuTTY fix. Ugly. Bad. But it works. (Good)
 ;; Even when TERM=xterm-256color on bash and
 ;; ~/.tmux.conf says:
@@ -336,9 +342,6 @@
 ;; CMake
 ;; =============
 (cmake-ide-setup)
-
-; disable autosave
-(setq auto-save-default nil)
 
 ;; =============
 ;; Elm
