@@ -57,3 +57,4 @@
 (depends-on "company-irony")
 (depends-on "flycheck-irony")
 (depends-on "cmake-ide")
+(depends-on "clang-format")

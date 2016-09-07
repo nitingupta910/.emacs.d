@@ -333,6 +333,7 @@
   (irony-mode)
   (flycheck-mode)
   (company-mode)
+  (local-set-key (kbd "C-c f") #'clang-format-buffer)
   (my-company-irony-setup)
   (c-toggle-hungry-state 1))
 
