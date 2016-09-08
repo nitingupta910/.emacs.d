@@ -188,7 +188,7 @@
 ;; golang
 (add-hook 'before-save-hook 'gofmt-before-save)
 
-(add-hook 'go-mode-hook 'company-mode)
+;(add-hook 'go-mode-hook 'company-mode)
 (add-hook 'go-mode-hook (lambda ()
 			  (set (make-local-variable 'company-backends) '(company-go))
 			  (company-mode)))
@@ -290,6 +290,13 @@
   :error-patterns ((warning (file-name) "[" line ", " column "]: " (message)))
   :modes typescript-mode)
 (add-to-list 'flycheck-checkers 'tslint)
+
+
+;; ============
+;; Protobuf
+;; ============
+(add-hook 'protobuf-mode-hook (lambda()
+                                (flycheck-mode)))
 
 ;; ============
 ;; C++
