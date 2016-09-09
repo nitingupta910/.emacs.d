@@ -167,6 +167,7 @@
 
 ;; indentation (linux kernel style)
 (setq c-default-style "linux")
+(setq c-backspace-function 'backward-delete-char)
 
 ;; helm-git-grep
 (global-set-key (kbd "C-c g") 'helm-git-grep)
