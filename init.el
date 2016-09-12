@@ -168,6 +168,8 @@
 ;; indentation (linux kernel style)
 (setq c-default-style "linux")
 (setq c-backspace-function 'backward-delete-char)
+(add-hook 'c-mode-common-hook '(lambda ()
+                                 (setq-default indent-tabs-mode t)))
 
 ;; helm-git-grep
 (global-set-key (kbd "C-c g") 'helm-git-grep)
