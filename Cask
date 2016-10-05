@@ -54,6 +54,7 @@
 (depends-on "cargo")
 (depends-on "racer")
 (depends-on "coffee-mode")
+(depends-on "cmake-ide")
 (depends-on "irony")
 (depends-on "company-irony")
 (depends-on "flycheck-irony")
