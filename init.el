@@ -197,6 +197,9 @@
 			  (company-mode)))
 (add-hook 'go-mode-hook 'flycheck-mode)
 
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup))
+
 (defun my-go-mode-hook ()
   (local-set-key (kbd "M-.") 'godef-jump)
   (local-set-key (kbd "M-,") 'pop-tag-mark))

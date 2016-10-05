@@ -32,6 +32,7 @@
 (depends-on "go-mode")
 (depends-on "company")
 (depends-on "company-go")
+(depends-on "flycheck-gometalinter")
 (depends-on "neotree")
 (depends-on "cask-mode")
 (depends-on "monokai-theme")
