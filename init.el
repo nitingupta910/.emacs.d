@@ -212,6 +212,11 @@
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-copy-env "PATH"))
 
+(add-hook 'haskell-mode-hook (lambda ()
+                               (set (make-local-variable 'company-backends) '(company-ghc))
+                               (company-mode)
+                               (flycheck-mode)))
+
 ;; set font size
 (set-face-attribute 'default nil :height 140)
 
