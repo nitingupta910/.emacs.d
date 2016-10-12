@@ -246,7 +246,8 @@
 ;(load-theme 'adwaita t)
 ;(load-theme 'deeper-blue t)
 ;(load-theme 'wombat t)
-(load-theme 'dichromacy t)
+;(load-theme 'dichromacy t)
+(load-theme 'gruvbox t)
 
 ;; show column number
 (column-number-mode t)
