@@ -43,6 +43,7 @@
 ; themes
 (depends-on "monokai-theme")
 (depends-on "darktooth-theme")
+(depends-on "gruvbox-theme")
 
 ; javascript
 (depends-on "js2-mode")

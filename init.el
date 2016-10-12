@@ -42,9 +42,9 @@
       scroll-conservatively 10000
       scroll-preserve-screen-position 1)
 
-(set-face-attribute 'region nil
-                    :background "lightblue"
-                    :foreground "black")
+;(set-face-attribute 'region nil
+;                    :background "lightblue"
+;                    :foreground "black")
 
 ;; Hide GUI elements
 (when window-system
@@ -82,9 +82,10 @@
 (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
 
-(set-face-attribute 'helm-selection nil
-		    :background "purple"
-		    :foreground "black")
+;(set-face-attribute 'helm-selection nil
+;		    :background "purple"
+;		    :foreground "black")
+
 ;;; helm: completion using <tab> in helm-find-file
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebihnd tab to do persistent action
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
@@ -119,17 +120,17 @@
 ;; during init.el loading during emacs startup
 (require 'helm-gtags)
 
-(setq helm-gtags-pulse-at-cursor nil)
-(set-face-attribute 'helm-selection nil
-                    :background "yellow"
-                    :foreground "black")
+;(set-face-attribute 'helm-selection nil
+;                    :background "yellow"
+;                    :foreground "black")
+
 ;; start-face is all gets displayed in terminal mode
 ;; for ref. the other face is: pulse-higlight-face
 ;; To get list of all face available:
 ;;    M-x helm-colors RET
-(set-face-attribute 'pulse-highlight-start-face nil
-                    :background "green"
-                    :foreground "white")
+;(set-face-attribute 'pulse-highlight-start-face nil
+;                    :background "green"
+;                    :foreground "white")
 
 ;; Treat .h files as C++ files unless overridden by dir specific config
 ;; To use c-mode for .h files for a particular project (dir), create
@@ -218,7 +219,7 @@
                                (flycheck-mode)))
 
 ;; set font size
-(set-face-attribute 'default nil :height 140)
+;(set-face-attribute 'default nil :height 140)
 
 ;; SCSS
 (add-hook 'scss-mode-hook
@@ -237,8 +238,10 @@
 ;;    (load-theme 'monokai t))
 ;; neotree displays correctly on dark background terminal
 ;; with this theme
-(load-theme 'monokai t)
+;(load-theme 'monokai t)
 ;(load-theme 'darktooth t)
+;;(load-theme 'adwaita t)
+(load-theme 'gruvbox t)
 
 ;; show column number
 (column-number-mode t)
@@ -415,6 +418,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
+ '(custom-safe-themes
+   (quote
+    ("3fd0fda6c3842e59f3a307d01f105cce74e1981c6670bb17588557b4cebfe1a7" default)))
  '(ediff-merge-split-window-function (quote split-window-horizontally))
  '(ediff-split-window-function (quote split-window-horizontally))
  '(font-use-system-font t)
