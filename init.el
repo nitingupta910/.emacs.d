@@ -16,6 +16,12 @@
 (show-paren-mode 1)
 (setq show-paren-delay 0)
 
+;; Show line numbers
+(global-linum-mode 1)
+
+;; set font size
+(set-face-attribute 'default nil :height 180)
+
 ;; We don't want to type yes and no all the time so, do y and n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -218,9 +224,6 @@
                                (company-mode)
                                (flycheck-mode)))
 
-;; set font size
-(set-face-attribute 'default nil :height 180)
-
 ;; SCSS
 (add-hook 'scss-mode-hook
           (lambda()
@@ -240,8 +243,10 @@
 ;; with this theme
 ;(load-theme 'monokai t)
 ;(load-theme 'darktooth t)
-;;(load-theme 'adwaita t)
-(load-theme 'gruvbox t)
+;(load-theme 'adwaita t)
+;(load-theme 'deeper-blue t)
+;(load-theme 'wombat t)
+(load-theme 'dichromacy t)
 
 ;; show column number
 (column-number-mode t)
