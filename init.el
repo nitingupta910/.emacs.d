@@ -19,6 +19,8 @@
 ;; Show line numbers
 (global-linum-mode 1)
 
+(menu-bar-mode -1)
+
 ;; set font size
 (set-face-attribute 'default nil :height 180)
 
