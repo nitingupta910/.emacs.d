@@ -16,6 +16,8 @@
 (show-paren-mode 1)
 (setq show-paren-delay 0)
 
+(setq password-cache-expiry nil)
+
 ;; Show line numbers
 (global-linum-mode 1)
 
