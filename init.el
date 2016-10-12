@@ -445,7 +445,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono" :foundry "DAMA" :slant normal :weight normal :height 158 :width normal))))
+ ;'(default ((t (:family "Ubuntu Mono" :foundry "DAMA" :slant normal :weight normal :height 160 :width normal))))
  '(ediff-fine-diff-A ((t (:background "brightblack"))))
  '(ediff-fine-diff-B ((t (:background "color-24"))))
  '(org-level-1 ((t (:inherit variable-pitch :foreground "tan" :height 1.0))))
