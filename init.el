@@ -56,7 +56,7 @@
 (when window-system
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
-  (menu-bar-mode 1)
+  (menu-bar-mode -1)
   )
 
 ;; Show current file name using C-x C-p
@@ -440,13 +440,14 @@
      (C . t))))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
-(custom-set-faces
+
+ ;(custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  ;'(default ((t (:family "Ubuntu Mono" :foundry "DAMA" :slant normal :weight normal :height 160 :width normal))))
- '(ediff-fine-diff-A ((t (:background "brightblack"))))
- '(ediff-fine-diff-B ((t (:background "color-24"))))
- '(org-level-1 ((t (:inherit variable-pitch :foreground "tan" :height 1.0))))
- '(org-level-2 ((t (:inherit variable-pitch :foreground "#A6E22E" :height 1.0)))))
+ ;'(ediff-fine-diff-A ((t (:background "brightblack"))))
+ ;'(ediff-fine-diff-B ((t (:background "color-24"))))
+ ;'(org-level-1 ((t (:inherit variable-pitch :foreground "tan" :height 1.0))))
+ ;'(org-level-2 ((t (:inherit variable-pitch :foreground "#A6E22E" :height 1.0)))))
