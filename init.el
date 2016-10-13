@@ -24,7 +24,11 @@
 (menu-bar-mode -1)
 
 ;; set font size
-(set-face-attribute 'default nil :height 180)
+;; Color definitions: https://github.com/morhetz/gruvbox
+(setq gruvbox-fg0 "#fbf1c7")
+(setq gruvbox-fg1 "#ebdbb2")
+(setq gruvbox-fg2 "#d5c4a1")
+(set-face-attribute 'default nil :height 180 :foreground gruvbox-fg1)
 
 ;; We don't want to type yes and no all the time so, do y and n
 (defalias 'yes-or-no-p 'y-or-n-p)
