@@ -66,8 +66,9 @@
 ; standard ml
 (depends-on "sml-mode")
 
-; markdown
+; text formats
 (depends-on "markdown-mode")
+(depends-on "toml-mode")
 
 ; haskell
 (depends-on "haskell-mode")
