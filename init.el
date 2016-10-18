@@ -227,8 +227,13 @@
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-copy-env "PATH"))
 
+;; ==================
+;; Haskell
+;; ==================
+(setq hindent-style "gibiansky")
 (add-hook 'haskell-mode-hook (lambda ()
                                (set (make-local-variable 'company-backends) '(company-ghc))
+                               (hindent-mode)
                                (company-mode)
                                (flycheck-mode)))
 
