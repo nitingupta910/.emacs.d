@@ -11,7 +11,7 @@
 (setq inhibit-startup-screen t)
 
 ;; See: https://www.quora.com/profile/Stefan-Bucur/Posts/Enabling-Soft-Word-Wrap-in-Emacs
-(visual-line-mode 1)
+(global-visual-line-mode 1)
 
 (show-paren-mode 1)
 (setq show-paren-delay 0)
