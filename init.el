@@ -233,6 +233,7 @@
 (setq hindent-style "gibiansky")
 (add-hook 'haskell-mode-hook (lambda ()
                                (set (make-local-variable 'company-backends) '(company-ghc))
+                               (interactive-haskell-mode)
                                (hindent-mode)
                                (company-mode)
                                (flycheck-mode)))
