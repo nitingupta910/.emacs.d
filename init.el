@@ -255,13 +255,13 @@
 ;;    (load-theme 'monokai t))
 ;; neotree displays correctly on dark background terminal
 ;; with this theme
-;(load-theme 'monokai t)
+(load-theme 'monokai t)
 ;(load-theme 'darktooth t)
 ;(load-theme 'adwaita t)
 ;(load-theme 'deeper-blue t)
 ;(load-theme 'wombat t)
 ;(load-theme 'dichromacy t)
-(load-theme 'gruvbox t)
+;(load-theme 'gruvbox t)
 
 ;; show column number
 (column-number-mode t)
