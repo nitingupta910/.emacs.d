@@ -32,9 +32,13 @@
 
 (defun ng-get-ppi ()
   "Get display PPI. Do not run this function in non-graphic mode."
+  (setq ng-mm-size (assq 'mm-size (car (display-monitor-attributes-list))))
+  (setq ng-mm-width (nth 1 (symbol-value 'ng-mm-size)))
+  (setq ng-mm-height (nth 2 (symbol-value 'ng-mm-size)))
+  
   (setq ng-diag-mm (sqrt (+
-                        (expt (display-mm-width) 2)
-                        (expt (display-mm-height) 2))))
+                        (expt (symbol-value 'ng-mm-width) 2)
+                        (expt (symbol-value 'ng-mm-height) 2))))
 
   (setq ng-diag-inches (* (symbol-value 'ng-diag-mm) 0.0393701))
 
