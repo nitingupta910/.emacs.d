@@ -35,7 +35,7 @@
   (setq ng-mm-size (assq 'mm-size (car (display-monitor-attributes-list))))
   (setq ng-mm-width (nth 1 (symbol-value 'ng-mm-size)))
   (setq ng-mm-height (nth 2 (symbol-value 'ng-mm-size)))
-  
+
   (setq ng-diag-mm (sqrt (+
                         (expt (symbol-value 'ng-mm-width) 2)
                         (expt (symbol-value 'ng-mm-height) 2))))
@@ -51,19 +51,24 @@
   )
 
 (if (display-graphic-p)
-    (funcall (lambda()
-      (if (< (ng-get-ppi) 90)
-          (setq ng-font-height 140)
-        (setq ng-font-height 180))
+    (funcall
+     (lambda()
+       (setq ng-ppi (ng-get-ppi))
 
-      (if (eq system-type 'darwin)
-          (setq ng-font-face "Menlo")
-        (setq ng-font-face "Monospace"))
-      
-      (set-face-attribute 'default nil
-                          :height (symbol-value 'ng-font-height)
-                          :font (symbol-value 'ng-font-face))
-      )))
+       (if (< (symbol-value 'ng-ppi) 108)
+           (setq ng-font-height 140)
+         (if (< (symbol-value 'ng-ppi) 120)
+             (setq ng-font-height 180)
+           (setq ng-font-height 240)))
+
+       (if (eq system-type 'darwin)
+           (setq ng-font-face "Menlo")
+         (setq ng-font-face "Monospace"))
+
+       (set-face-attribute 'default nil
+                           :height (symbol-value 'ng-font-height)
+                           :font (symbol-value 'ng-font-face))
+       )))
 
 ;; We don't want to type yes and no all the time so, do y and n
 (defalias 'yes-or-no-p 'y-or-n-p)
