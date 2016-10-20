@@ -143,9 +143,9 @@
 ;; for ref. the other face is: pulse-higlight-face
 ;; To get list of all face available:
 ;;    M-x helm-colors RET
-;(set-face-attribute 'pulse-highlight-start-face nil
-;                    :background "green"
-;                    :foreground "white")
+(set-face-attribute 'pulse-highlight-start-face nil
+                    :background "blue"
+                    :foreground "white")
 
 ;; Treat .h files as C++ files unless overridden by dir specific config
 ;; To use c-mode for .h files for a particular project (dir), create
