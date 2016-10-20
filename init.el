@@ -25,11 +25,16 @@
 
 ;; set font size
 ;; Color definitions: https://github.com/morhetz/gruvbox
-(setq gruvbox-fg0 "#fbf1c7")
-(setq gruvbox-fg1 "#ebdbb2")
-(setq gruvbox-fg2 "#d5c4a1")
-(set-face-attribute 'default nil :height 140 :font "Monospace")
+;(setq gruvbox-fg0 "#fbf1c7")
+;(setq gruvbox-fg1 "#ebdbb2")
+;(setq gruvbox-fg2 "#d5c4a1")
 ;(set-face-attribute 'default nil :height 180 :foreground gruvbox-fg1)
+
+(if (<= (display-pixel-height) 1024)
+    (setq ng-font-height 140)
+  (setq ng-font-height 180))
+
+(set-face-attribute 'default nil :height (symbol-value 'ng-font-height) :font "Monospace")
 
 ;; We don't want to type yes and no all the time so, do y and n
 (defalias 'yes-or-no-p 'y-or-n-p)
