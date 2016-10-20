@@ -30,11 +30,30 @@
 ;(setq gruvbox-fg2 "#d5c4a1")
 ;(set-face-attribute 'default nil :height 180 :foreground gruvbox-fg1)
 
-(if (<= (display-pixel-height) 1024)
-    (setq ng-font-height 140)
-  (setq ng-font-height 180))
+(defun ng-get-ppi ()
+  "Get display PPI. Do not run this function in non-graphic mode."
+  (setq ng-diag-mm (sqrt (+
+                        (expt (display-mm-width) 2)
+                        (expt (display-mm-height) 2))))
 
-(set-face-attribute 'default nil :height (symbol-value 'ng-font-height) :font "Monospace")
+  (setq ng-diag-inches (* (symbol-value 'ng-diag-mm) 0.0393701))
+
+  (setq ng-diag-pixels (sqrt (+
+                        (expt (display-pixel-width) 2)
+                        (expt (display-pixel-height) 2))))
+
+  (/ (symbol-value 'ng-diag-pixels)
+     (symbol-value 'ng-diag-inches))
+  )
+
+(if (display-graphic-p)
+    (funcall (lambda()
+      (if (< (ng-get-ppi) 96)
+          (setq ng-font-height 140)
+        (setq ng-font-height 180))
+
+      (set-face-attribute 'default nil :height (symbol-value 'ng-font-height) :font "Monospace")
+      )))
 
 ;; We don't want to type yes and no all the time so, do y and n
 (defalias 'yes-or-no-p 'y-or-n-p)
