@@ -48,11 +48,17 @@
 
 (if (display-graphic-p)
     (funcall (lambda()
-      (if (< (ng-get-ppi) 96)
+      (if (< (ng-get-ppi) 90)
           (setq ng-font-height 140)
         (setq ng-font-height 180))
 
-      (set-face-attribute 'default nil :height (symbol-value 'ng-font-height) :font "Monospace")
+      (if (eq system-type 'darwin)
+          (setq ng-font-face "Menlo")
+        (setq ng-font-face "Monospace"))
+      
+      (set-face-attribute 'default nil
+                          :height (symbol-value 'ng-font-height)
+                          :font (symbol-value 'ng-font-face))
       )))
 
 ;; We don't want to type yes and no all the time so, do y and n
