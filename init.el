@@ -23,6 +23,12 @@
 
 (menu-bar-mode -1)
 
+;; for moving buffers (buffer-move package)
+(global-set-key (kbd "<C-S-up>")     'buf-move-up)
+(global-set-key (kbd "<C-S-down>")   'buf-move-down)
+(global-set-key (kbd "<C-S-left>")   'buf-move-left)
+(global-set-key (kbd "<C-S-right>")  'buf-move-right)
+
 ;; set font size
 ;; Color definitions: https://github.com/morhetz/gruvbox
 ;(setq gruvbox-fg0 "#fbf1c7")

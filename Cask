@@ -31,6 +31,7 @@
 (depends-on "helm-projectile")
 (depends-on "helm-gtags")
 (depends-on "helm-git-grep")
+(depends-on "buffer-move")
 
 ; golang
 (depends-on "go-mode")
