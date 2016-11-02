@@ -443,6 +443,7 @@
 ;;
 (require 'elm-mode)
 
+(setq elm-tags-on-save t)
 (add-hook 'flycheck-mode-hook 'flycheck-elm-setup)
 (add-hook 'elm-mode-hook
           (lambda ()
