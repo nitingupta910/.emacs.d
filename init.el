@@ -7,6 +7,10 @@
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
 
+(setq confirm-kill-emacs 'y-or-n-p)
+
+(setq tags-revert-without-query 1)
+
 ;; projectile doesn't work on welcome screen (projectile bug)
 (setq inhibit-startup-screen t)
 
