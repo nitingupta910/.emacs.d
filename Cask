@@ -70,9 +70,13 @@
 ; text formats
 (depends-on "markdown-mode")
 (depends-on "toml-mode")
+(depends-on "yaml-mode")
+(depends-on "dokuwiki-mode")
 
 ; haskell
 (depends-on "haskell-mode")
+(depends-on "intero")
+;; haskell: probably don't need packages below
 (depends-on "hindent")
 (depends-on "ghc")
 (depends-on "company-ghc")
