@@ -365,8 +365,9 @@
   (indent-region (point-min) (point-max)))
 
 ;; js2-mode
-;;(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-mode))
-;;(add-to-list 'auto-mode-alist '("\\.tsx\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . js2-mode))
 
 ;; typescript
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
