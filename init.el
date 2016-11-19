@@ -7,12 +7,14 @@
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
 
-(setq confirm-kill-emacs 'y-or-n-p)
-
-(setq tags-revert-without-query 1)
+;;
+;; BEGIN Generic settings
+;;
 
 ;; projectile doesn't work on welcome screen (projectile bug)
 (setq inhibit-startup-screen t)
+
+(menu-bar-mode -1)
 
 ;; See: https://www.quora.com/profile/Stefan-Bucur/Posts/Enabling-Soft-Word-Wrap-in-Emacs
 (global-visual-line-mode 1)
@@ -22,10 +24,30 @@
 
 (setq password-cache-expiry nil)
 
+;; for smooth scrolling and disabling the automatic
+;; recentering of emacs when moving the cursor
+(setq redisplay-dont-pause t
+      scroll-margin 1
+      scroll-step 1
+      scroll-conservatively 10000
+      scroll-preserve-screen-position 1)
+
 ;; Show line numbers
 (global-linum-mode 1)
 
-(menu-bar-mode -1)
+; disable autosave
+(setq auto-save-default nil)
+
+(setq confirm-kill-emacs 'y-or-n-p)
+
+;; We don't want to type yes and no all the time so, do y and n
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(setq tags-revert-without-query 1)
+
+;;
+;; END Generic settings
+;;
 
 ;; for moving buffers (buffer-move package)
 (global-set-key (kbd "<C-S-up>")     'buf-move-up)
@@ -86,9 +108,6 @@
                            :font (symbol-value 'ng-font-face))
        )))
 
-;; We don't want to type yes and no all the time so, do y and n
-(defalias 'yes-or-no-p 'y-or-n-p)
-
 ; disable autosave
 (setq auto-save-default nil)
 
@@ -103,14 +122,6 @@
 ;; worked on Linux/tmux (don't know about putty)
 (define-key global-map "\M-[1~" 'beginning-of-line)
 (define-key global-map [select] 'end-of-line)
-
-;; for smooth scrolling and disabling the automatic
-;; recentering of emacs when moving the cursor
-(setq redisplay-dont-pause t
-      scroll-margin 1
-      scroll-step 1
-      scroll-conservatively 10000
-      scroll-preserve-screen-position 1)
 
 ;(set-face-attribute 'region nil
 ;                    :background "lightblue"
@@ -335,6 +346,14 @@
 ;; make indentation commands use space only (never tab character)
 (setq-default indent-tabs-mode nil) ; emacs 23.1, 24.2, default to t
 
+;; configure backup file creation
+(setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
+(setq backup-by-copying t)
+(setq delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
+
 ;; multiple cursors (C-S-d isn't working))
 (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-S-d") 'mc/mark-previous-like-this)
@@ -350,14 +369,6 @@
   t " my-keys" 'my-keys-minor-mode-map)
 
 (my-keys-minor-mode 1)
-
-;; configure backup file creation
-(setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
-(setq backup-by-copying t)
-(setq delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      version-control t)
 
 (defun indent-buffer ()
   "Indent current buffer according to major mode."
