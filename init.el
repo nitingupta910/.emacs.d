@@ -96,7 +96,7 @@
        (if (< (symbol-value 'ng-ppi) 108)
            (setq ng-font-height 140)
          (if (< (symbol-value 'ng-ppi) 120)
-             (setq ng-font-height 200)
+             (setq ng-font-height 240)
            (setq ng-font-height 240)))
 
        (if (eq system-type 'darwin)
