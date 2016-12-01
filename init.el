@@ -32,13 +32,17 @@
       scroll-conservatively 10000
       scroll-preserve-screen-position 1)
 
+;; press any key to overwrite selected text
+(delete-selection-mode 1)
+
 ;; Show line numbers
 (global-linum-mode 1)
 
 ; disable autosave
 (setq auto-save-default nil)
 
-(setq confirm-kill-emacs 'y-or-n-p)
+;; ask before exiting emacs
+;(setq confirm-kill-emacs 'y-or-n-p)
 
 ;; We don't want to type yes and no all the time so, do y and n
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -65,7 +69,7 @@
 (defun ng-get-ppi ()
   "Get display PPI. Do not run this function in non-graphic mode."
   (setq ng-disp-attrs (car (display-monitor-attributes-list)))
-  
+
   (setq ng-mm-size (assq 'mm-size (symbol-value 'ng-disp-attrs)))
   (setq ng-mm-width (nth 1 (symbol-value 'ng-mm-size)))
   (setq ng-mm-height (nth 2 (symbol-value 'ng-mm-size)))
@@ -79,7 +83,7 @@
   (setq ng-geom (assq 'geometry (symbol-value 'ng-disp-attrs)))
   (setq ng-pixel-width (nth 3 (symbol-value 'ng-geom)))
   (setq ng-pixel-height (nth 4 (symbol-value 'ng-geom)))
-  
+
   (setq ng-diag-pixels (sqrt (+
                         (expt (symbol-value 'ng-pixel-width) 2)
                         (expt (symbol-value 'ng-pixel-height) 2))))
