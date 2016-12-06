@@ -42,7 +42,7 @@
 (setq auto-save-default nil)
 
 ;; ask before exiting emacs
-;(setq confirm-kill-emacs 'y-or-n-p)
+(setq confirm-kill-emacs 'y-or-n-p)
 
 ;; We don't want to type yes and no all the time so, do y and n
 (defalias 'yes-or-no-p 'y-or-n-p)
