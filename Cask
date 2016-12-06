@@ -73,6 +73,10 @@
 (depends-on "yaml-mode")
 (depends-on "dokuwiki-mode")
 
+; latex
+(depends-on "auctex")
+(depends-on "company-auctex")
+
 ; haskell
 (depends-on "haskell-mode")
 (depends-on "intero")
