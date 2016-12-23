@@ -99,7 +99,7 @@
 (depends-on "flycheck-irony")
 (depends-on "clang-format")
 (depends-on "protobuf-mode")
-(depends-on "flycheck-protobuf")
+;(depends-on "flycheck-protobuf")
 
 ; misc
 (depends-on "neotree")
