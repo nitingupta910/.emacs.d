@@ -11,6 +11,9 @@
 ;; BEGIN Generic settings
 ;;
 
+;; show vertical bar for cursor
+(setq-default cursor-type 'bar)
+
 ;; projectile doesn't work on welcome screen (projectile bug)
 (setq inhibit-startup-screen t)
 
