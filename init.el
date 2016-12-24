@@ -49,6 +49,41 @@
 
 (setq tags-revert-without-query 1)
 
+;; Show current file name using C-x C-p
+;; Source: https://camdez.com/blog/2013/11/14/emacs-show-buffer-file-name/
+(defun ng/show-buffer-file-name ()
+  "Show the full path to the current file in the minibuffer."
+  (interactive)
+  (let ((file-name (buffer-file-name)))
+    (if file-name
+        (progn
+          (message file-name)
+          (kill-new file-name))
+      (error "Buffer not visiting a file"))))
+
+(global-set-key (kbd "C-x C-p") 'ng/show-buffer-file-name)
+
+;; Source: http://www.emacswiki.org/emacs-en/download/misc-cmds.el
+;; Also see: http://emacs.stackexchange.com/questions/169/how-do-i-reload-a-file-in-a-buffer
+(defun revert-buffer-confirm-if-modified ()
+  "Revert buffer without confirmation."
+  (interactive)
+  (revert-buffer t (not (buffer-modified-p)) t))
+
+(global-set-key (kbd "C-c r") 'revert-buffer-confirm-if-modified)
+
+;; PuTTY fix. Ugly. Bad. But it works. (Good)
+;; Even when TERM=xterm-256color on bash and
+;; ~/.tmux.conf says:
+;;   set-window-option -g xterm-keys on
+;;   set -g default-terminal "xterm-256color"
+;; still, pressing <end> key results in error:
+;;   <select> is undefined
+;; This hack fixes the end key. Home key already
+;; worked on Linux/tmux (don't know about putty)
+(define-key global-map "\M-[1~" 'beginning-of-line)
+(define-key global-map [select] 'end-of-line)
+
 ;;
 ;; END Generic settings
 ;;
@@ -112,21 +147,6 @@
                            :font (symbol-value 'ng-font-face))
        )))
 
-; disable autosave
-(setq auto-save-default nil)
-
-;; PuTTY fix. Ugly. Bad. But it works. (Good)
-;; Even when TERM=xterm-256color on bash and
-;; ~/.tmux.conf says:
-;;   set-window-option -g xterm-keys on
-;;   set -g default-terminal "xterm-256color"
-;; still, pressing <end> key results in error:
-;;   <select> is undefined
-;; This hack fixes the end key. Home key already
-;; worked on Linux/tmux (don't know about putty)
-(define-key global-map "\M-[1~" 'beginning-of-line)
-(define-key global-map [select] 'end-of-line)
-
 ;(set-face-attribute 'region nil
 ;                    :background "lightblue"
 ;                    :foreground "black")
@@ -137,29 +157,6 @@
   (toggle-scroll-bar -1)
   (menu-bar-mode -1)
   )
-
-;; Show current file name using C-x C-p
-;; Source: https://camdez.com/blog/2013/11/14/emacs-show-buffer-file-name/
-(defun ng/show-buffer-file-name ()
-  "Show the full path to the current file in the minibuffer."
-  (interactive)
-  (let ((file-name (buffer-file-name)))
-    (if file-name
-        (progn
-          (message file-name)
-          (kill-new file-name))
-      (error "Buffer not visiting a file"))))
-
-(global-set-key (kbd "C-x C-p") 'ng/show-buffer-file-name)
-
-;; Source: http://www.emacswiki.org/emacs-en/download/misc-cmds.el
-;; Also see: http://emacs.stackexchange.com/questions/169/how-do-i-reload-a-file-in-a-buffer
-(defun revert-buffer-confirm-if-modified ()
-  "Revert buffer without confirmation."
-  (interactive)
-  (revert-buffer t (not (buffer-modified-p)) t))
-
-(global-set-key (kbd "C-c r") 'revert-buffer-confirm-if-modified)
 
 ;; helm
 (helm-mode 1)
