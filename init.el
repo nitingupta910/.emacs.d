@@ -311,7 +311,9 @@
 ;                               (company-mode)
 ;                               (flycheck-mode)))
 
-(add-hook 'haskell-mode-hook 'intero-mode)
+(add-hook 'haskell-mode-hook (lambda ()
+                               (intero-mode)
+                               (hindent-mode)))
 
 ;; SCSS
 (add-hook 'scss-mode-hook
