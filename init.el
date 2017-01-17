@@ -4,6 +4,8 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+(setq user-emacs-directory "~/.emacs.d")
+
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
 

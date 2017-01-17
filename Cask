@@ -72,6 +72,7 @@
 (depends-on "toml-mode")
 (depends-on "yaml-mode")
 (depends-on "dokuwiki-mode")
+(depends-on "adoc-mode")
 
 ; latex
 (depends-on "auctex")
