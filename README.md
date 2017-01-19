@@ -8,7 +8,7 @@ Before you use this config, make sure you have cask [installed](http://cask.read
 curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 ```
 
-Then do following to start using this config:
+Then do the following to start using this config:
 
 ```
 git clone https://github.com/nitingupta910/.emacs.d.git ~/
