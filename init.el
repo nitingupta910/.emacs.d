@@ -4,15 +4,22 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+(setq user-emacs-directory "~/.emacs.d")
+
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
 
-(setq confirm-kill-emacs 'y-or-n-p)
+;;
+;; BEGIN Generic settings
+;;
 
-(setq tags-revert-without-query 1)
+;; show vertical bar for cursor
+(setq-default cursor-type 'bar)
 
 ;; projectile doesn't work on welcome screen (projectile bug)
 (setq inhibit-startup-screen t)
+
+(menu-bar-mode -1)
 
 ;; See: https://www.quora.com/profile/Stefan-Bucur/Posts/Enabling-Soft-Word-Wrap-in-Emacs
 (global-visual-line-mode 1)
@@ -22,88 +29,6 @@
 
 (setq password-cache-expiry nil)
 
-;; Show line numbers
-(global-linum-mode 1)
-
-(menu-bar-mode -1)
-
-;; for moving buffers (buffer-move package)
-(global-set-key (kbd "<C-S-up>")     'buf-move-up)
-(global-set-key (kbd "<C-S-down>")   'buf-move-down)
-(global-set-key (kbd "<C-S-left>")   'buf-move-left)
-(global-set-key (kbd "<C-S-right>")  'buf-move-right)
-
-;; set font size
-;; Color definitions: https://github.com/morhetz/gruvbox
-;(setq gruvbox-fg0 "#fbf1c7")
-;(setq gruvbox-fg1 "#ebdbb2")
-;(setq gruvbox-fg2 "#d5c4a1")
-;(set-face-attribute 'default nil :height 180 :foreground gruvbox-fg1)
-
-(defun ng-get-ppi ()
-  "Get display PPI. Do not run this function in non-graphic mode."
-  (setq ng-disp-attrs (car (display-monitor-attributes-list)))
-  
-  (setq ng-mm-size (assq 'mm-size (symbol-value 'ng-disp-attrs)))
-  (setq ng-mm-width (nth 1 (symbol-value 'ng-mm-size)))
-  (setq ng-mm-height (nth 2 (symbol-value 'ng-mm-size)))
-
-  (setq ng-diag-mm (sqrt (+
-                        (expt (symbol-value 'ng-mm-width) 2)
-                        (expt (symbol-value 'ng-mm-height) 2))))
-
-  (setq ng-diag-inches (* (symbol-value 'ng-diag-mm) 0.0393701))
-
-  (setq ng-geom (assq 'geometry (symbol-value 'ng-disp-attrs)))
-  (setq ng-pixel-width (nth 3 (symbol-value 'ng-geom)))
-  (setq ng-pixel-height (nth 4 (symbol-value 'ng-geom)))
-  
-  (setq ng-diag-pixels (sqrt (+
-                        (expt (symbol-value 'ng-pixel-width) 2)
-                        (expt (symbol-value 'ng-pixel-height) 2))))
-
-  (/ (symbol-value 'ng-diag-pixels)
-     (symbol-value 'ng-diag-inches))
-  )
-
-(if (display-graphic-p)
-    (funcall
-     (lambda()
-       (setq ng-ppi (ng-get-ppi))
-
-       (if (< (symbol-value 'ng-ppi) 108)
-           (setq ng-font-height 140)
-         (if (< (symbol-value 'ng-ppi) 120)
-             (setq ng-font-height 180)
-           (setq ng-font-height 200)))
-
-       (if (eq system-type 'darwin)
-           (setq ng-font-face "Menlo")
-         (setq ng-font-face "Monospace"))
-
-       (set-face-attribute 'default nil
-                           :height (symbol-value 'ng-font-height)
-                           :font (symbol-value 'ng-font-face))
-       )))
-
-;; We don't want to type yes and no all the time so, do y and n
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-; disable autosave
-(setq auto-save-default nil)
-
-;; PuTTY fix. Ugly. Bad. But it works. (Good)
-;; Even when TERM=xterm-256color on bash and
-;; ~/.tmux.conf says:
-;;   set-window-option -g xterm-keys on
-;;   set -g default-terminal "xterm-256color"
-;; still, pressing <end> key results in error:
-;;   <select> is undefined
-;; This hack fixes the end key. Home key already
-;; worked on Linux/tmux (don't know about putty)
-(define-key global-map "\M-[1~" 'beginning-of-line)
-(define-key global-map [select] 'end-of-line)
-
 ;; for smooth scrolling and disabling the automatic
 ;; recentering of emacs when moving the cursor
 (setq redisplay-dont-pause t
@@ -112,16 +37,22 @@
       scroll-conservatively 10000
       scroll-preserve-screen-position 1)
 
-;(set-face-attribute 'region nil
-;                    :background "lightblue"
-;                    :foreground "black")
+;; press any key to overwrite selected text
+(delete-selection-mode 1)
 
-;; Hide GUI elements
-(when window-system
-  (tool-bar-mode -1)
-  (toggle-scroll-bar -1)
-  (menu-bar-mode -1)
-  )
+;; Show line numbers
+(global-linum-mode 1)
+
+; disable autosave
+(setq auto-save-default nil)
+
+;; ask before exiting emacs
+(setq confirm-kill-emacs 'y-or-n-p)
+
+;; We don't want to type yes and no all the time so, do y and n
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(setq tags-revert-without-query 1)
 
 ;; Show current file name using C-x C-p
 ;; Source: https://camdez.com/blog/2013/11/14/emacs-show-buffer-file-name/
@@ -145,6 +76,92 @@
   (revert-buffer t (not (buffer-modified-p)) t))
 
 (global-set-key (kbd "C-c r") 'revert-buffer-confirm-if-modified)
+
+;; PuTTY fix. Ugly. Bad. But it works. (Good)
+;; Even when TERM=xterm-256color on bash and
+;; ~/.tmux.conf says:
+;;   set-window-option -g xterm-keys on
+;;   set -g default-terminal "xterm-256color"
+;; still, pressing <end> key results in error:
+;;   <select> is undefined
+;; This hack fixes the end key. Home key already
+;; worked on Linux/tmux (don't know about putty)
+(define-key global-map "\M-[1~" 'beginning-of-line)
+(define-key global-map [select] 'end-of-line)
+
+;;
+;; END Generic settings
+;;
+
+;; for moving buffers (buffer-move package)
+(global-set-key (kbd "<C-S-up>")     'buf-move-up)
+(global-set-key (kbd "<C-S-down>")   'buf-move-down)
+(global-set-key (kbd "<C-S-left>")   'buf-move-left)
+(global-set-key (kbd "<C-S-right>")  'buf-move-right)
+
+;; set font size
+;; Color definitions: https://github.com/morhetz/gruvbox
+;(setq gruvbox-fg0 "#fbf1c7")
+;(setq gruvbox-fg1 "#ebdbb2")
+;(setq gruvbox-fg2 "#d5c4a1")
+;(set-face-attribute 'default nil :height 180 :foreground gruvbox-fg1)
+
+(defun ng-get-ppi ()
+  "Get display PPI. Do not run this function in non-graphic mode."
+  (setq ng-disp-attrs (car (display-monitor-attributes-list)))
+
+  (setq ng-mm-size (assq 'mm-size (symbol-value 'ng-disp-attrs)))
+  (setq ng-mm-width (nth 1 (symbol-value 'ng-mm-size)))
+  (setq ng-mm-height (nth 2 (symbol-value 'ng-mm-size)))
+
+  (setq ng-diag-mm (sqrt (+
+                        (expt (symbol-value 'ng-mm-width) 2)
+                        (expt (symbol-value 'ng-mm-height) 2))))
+
+  (setq ng-diag-inches (* (symbol-value 'ng-diag-mm) 0.0393701))
+
+  (setq ng-geom (assq 'geometry (symbol-value 'ng-disp-attrs)))
+  (setq ng-pixel-width (nth 3 (symbol-value 'ng-geom)))
+  (setq ng-pixel-height (nth 4 (symbol-value 'ng-geom)))
+
+  (setq ng-diag-pixels (sqrt (+
+                        (expt (symbol-value 'ng-pixel-width) 2)
+                        (expt (symbol-value 'ng-pixel-height) 2))))
+
+  (/ (symbol-value 'ng-diag-pixels)
+     (symbol-value 'ng-diag-inches))
+  )
+
+(if (display-graphic-p)
+    (funcall
+     (lambda()
+       (setq ng-ppi (ng-get-ppi))
+
+       (if (< (symbol-value 'ng-ppi) 108)
+           (setq ng-font-height 140)
+         (if (< (symbol-value 'ng-ppi) 128)
+             (setq ng-font-height 220)
+           (setq ng-font-height 240)))
+
+       (if (eq system-type 'darwin)
+           (setq ng-font-face "Menlo")
+         (setq ng-font-face "Monospace"))
+
+       (set-face-attribute 'default nil
+                           :height (symbol-value 'ng-font-height)
+                           :font (symbol-value 'ng-font-face))
+       )))
+
+;(set-face-attribute 'region nil
+;                    :background "lightblue"
+;                    :foreground "black")
+
+;; Hide GUI elements
+(when window-system
+  (tool-bar-mode -1)
+  (toggle-scroll-bar -1)
+  (menu-bar-mode -1)
+  )
 
 ;; helm
 (helm-mode 1)
@@ -294,7 +311,9 @@
 ;                               (company-mode)
 ;                               (flycheck-mode)))
 
-(add-hook 'haskell-mode-hook 'intero-mode)
+(add-hook 'haskell-mode-hook (lambda ()
+                               (intero-mode)
+                               (hindent-mode)))
 
 ;; SCSS
 (add-hook 'scss-mode-hook
@@ -335,6 +354,14 @@
 ;; make indentation commands use space only (never tab character)
 (setq-default indent-tabs-mode nil) ; emacs 23.1, 24.2, default to t
 
+;; configure backup file creation
+(setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
+(setq backup-by-copying t)
+(setq delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
+
 ;; multiple cursors (C-S-d isn't working))
 (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-S-d") 'mc/mark-previous-like-this)
@@ -350,14 +377,6 @@
   t " my-keys" 'my-keys-minor-mode-map)
 
 (my-keys-minor-mode 1)
-
-;; configure backup file creation
-(setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
-(setq backup-by-copying t)
-(setq delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      version-control t)
 
 (defun indent-buffer ()
   "Indent current buffer according to major mode."

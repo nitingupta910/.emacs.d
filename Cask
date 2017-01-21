@@ -72,6 +72,11 @@
 (depends-on "toml-mode")
 (depends-on "yaml-mode")
 (depends-on "dokuwiki-mode")
+(depends-on "adoc-mode")
+
+; latex
+(depends-on "auctex")
+(depends-on "company-auctex")
 
 ; haskell
 (depends-on "haskell-mode")
@@ -95,7 +100,7 @@
 (depends-on "flycheck-irony")
 (depends-on "clang-format")
 (depends-on "protobuf-mode")
-(depends-on "flycheck-protobuf")
+;(depends-on "flycheck-protobuf")
 
 ; misc
 (depends-on "neotree")
