@@ -137,8 +137,8 @@
      (lambda()
        (setq ng-ppi (ng-get-ppi))
 
-       (if (< (symbol-value 'ng-ppi) 108)
-           (setq ng-font-height 140)
+       (if (< (symbol-value 'ng-ppi) 109)
+           (setq ng-font-height 160)
          (if (< (symbol-value 'ng-ppi) 128)
              (setq ng-font-height 220)
            (setq ng-font-height 240)))
