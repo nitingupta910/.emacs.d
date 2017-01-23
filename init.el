@@ -110,41 +110,41 @@
   "Get display PPI. Do not run this function in non-graphic mode."
   (setq ng-disp-attrs (car (display-monitor-attributes-list)))
 
-  (setq ng-mm-size (assq 'mm-size (symbol-value 'ng-disp-attrs)))
-  (setq ng-mm-width (nth 1 (symbol-value 'ng-mm-size)))
-  (setq ng-mm-height (nth 2 (symbol-value 'ng-mm-size)))
+  (setq ng-mm-size (assq 'mm-size ng-disp-attrs))
+  (setq ng-mm-width (nth 1 ng-mm-size))
+  (setq ng-mm-height (nth 2 ng-mm-size))
 
   (setq ng-diag-mm (sqrt (+
-                        (expt (symbol-value 'ng-mm-width) 2)
-                        (expt (symbol-value 'ng-mm-height) 2))))
+                        (expt ng-mm-width 2)
+                        (expt ng-mm-height 2))))
 
-  (setq ng-diag-inches (* (symbol-value 'ng-diag-mm) 0.0393701))
+  (setq ng-diag-inches (* ng-diag-mm 0.0393701))
 
-  (setq ng-geom (assq 'geometry (symbol-value 'ng-disp-attrs)))
-  (setq ng-pixel-width (nth 3 (symbol-value 'ng-geom)))
-  (setq ng-pixel-height (nth 4 (symbol-value 'ng-geom)))
+  (setq ng-geom (assq 'geometry ng-disp-attrs))
+  (setq ng-pixel-width (nth 3 ng-geom))
+  (setq ng-pixel-height (nth 4 ng-geom))
 
   (setq ng-diag-pixels (sqrt (+
-                        (expt (symbol-value 'ng-pixel-width) 2)
-                        (expt (symbol-value 'ng-pixel-height) 2))))
+                        (expt ng-pixel-width 2)
+                        (expt ng-pixel-height 2))))
 
-  (/ (symbol-value 'ng-diag-pixels)
-     (symbol-value 'ng-diag-inches))
-  )
+  (/ ng-diag-pixels ng-diag-inches))
 
 (if (display-graphic-p)
     (funcall
      (lambda()
-       (setq ng-ppi (ng-get-ppi))
+       (setq ng-ppi (floor (ng-get-ppi)))
 
-       (if (< (symbol-value 'ng-ppi) 109)
-           (setq ng-font-height 160)
-         (if (< (symbol-value 'ng-ppi) 128)
-             (setq ng-font-height 220)
-           (setq ng-font-height 240)))
+       (if (<= ng-ppi 92)
+	   (setq ng-font-height 140)
+	 (if (<= ng-ppi 108)
+	     (setq ng-font-height 160)
+	   (if (<= ng-ppi 128)
+	       (setq ng-font-height 220)
+	     (setq ng-font-height 240))))
 
        (if (eq system-type 'darwin)
-             (setq ng-font-face "Menlo")
+	   (setq ng-font-face "Menlo")
          (setq ng-font-face "Monospace"))
 
 
@@ -308,7 +308,7 @@
 ;; Markdown
 
 (add-hook 'markdown-mode-hook (lambda()
-                                (flyspell-mode))
+                                (flyspell-mode)))
 
 ;; ==================
 ;; Haskell
