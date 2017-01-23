@@ -305,6 +305,11 @@
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-copy-env "PATH"))
 
+;; Markdown
+
+(add-hook 'markdown-mode-hook (lambda()
+                                (flyspell-mode))
+
 ;; ==================
 ;; Haskell
 ;; ==================
