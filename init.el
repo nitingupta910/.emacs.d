@@ -46,6 +46,11 @@
 ; disable autosave
 (setq auto-save-default nil)
 
+;; Auto reload changes from disk.
+;; This does not check or revert remote files,
+;; because that is usually too slow.
+(global-auto-revert-mode)
+
 ;; ask before exiting emacs
 (setq confirm-kill-emacs 'y-or-n-p)
 
