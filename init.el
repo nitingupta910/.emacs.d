@@ -193,7 +193,7 @@
 ;; HACK: projectile causes slowdown when editing files over sshfs
 ;; See: https://github.com/bbatsov/projectile/issues/657
 (projectile-global-mode)
-(setq projectile-mode-line "foo")
+;(setq projectile-mode-line "foo")
 ;; In large projects, caching can significantly speedup file and
 ;; directory listings, making it display instantly.
 ;; See: http://tuhdo.github.io/helm-projectile.html
