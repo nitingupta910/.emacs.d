@@ -328,7 +328,9 @@
 
 (add-hook 'haskell-mode-hook (lambda ()
                                (intero-mode)
-                               (hindent-mode)))
+                               (hindent-mode)
+                               (setq hindent-reformat-buffer-on-save t)))
+
 
 ;; SCSS
 (add-hook 'scss-mode-hook
