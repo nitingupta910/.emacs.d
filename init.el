@@ -437,7 +437,7 @@
 (c-add-style "my-style"
              '("stroustrup"
                (indent-tabs-mode . nil)        ; use spaces rather than tabs
-               (c-basic-offset . 2)            ; indent by four spaces
+               (c-basic-offset . 4)            ; indent by four spaces
                (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
                                    (brace-list-open . 0)
                                    (statement-case-open . +)))))
