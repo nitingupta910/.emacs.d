@@ -98,6 +98,9 @@
 ;; END Generic settings
 ;;
 
+;; Open untitled new buffer like other text editors.
+(bind-key "M-n" 'untitled-new-buffer-with-select-major-mode)
+
 ;; for moving buffers (buffer-move package)
 (global-set-key (kbd "<C-S-up>")     'buf-move-up)
 (global-set-key (kbd "<C-S-down>")   'buf-move-down)

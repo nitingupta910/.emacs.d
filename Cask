@@ -32,6 +32,7 @@
 (depends-on "helm-gtags")
 (depends-on "helm-git-grep")
 (depends-on "buffer-move")
+(depends-on "untitled-new-buffer")
 
 ; golang
 (depends-on "go-mode")
