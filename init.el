@@ -515,6 +515,7 @@
             (racer-mode)
             (cargo-minor-mode)
             (flycheck-mode)
+            (add-hook 'before-save-hook 'rust-format-buffer)
             (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)))
 
 (add-hook 'racer-mode-hook #'eldoc-mode)
