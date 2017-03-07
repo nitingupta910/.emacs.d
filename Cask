@@ -104,4 +104,4 @@
 ;(depends-on "flycheck-protobuf")
 
 ; misc
-(depends-on "neotree")
+(depends-on "smooth-scrolling")
