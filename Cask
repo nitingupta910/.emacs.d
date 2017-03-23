@@ -65,6 +65,9 @@
 (depends-on "elm-mode")
 (depends-on "flycheck-elm")
 
+; elixir
+(depends-on "alchemist")
+
 ; standard ml
 (depends-on "sml-mode")
 
