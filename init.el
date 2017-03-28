@@ -13,6 +13,10 @@
 ;; BEGIN Generic settings
 ;;
 
+;; See: https://www.emacswiki.org/emacs/ViewMode
+;; I think toggling view-mode is better than toggle-read-only.
+(define-key ctl-x-map "\C-q" 'view-mode)
+
 ;; show vertical bar for cursor
 (setq-default cursor-type 'bar)
 
