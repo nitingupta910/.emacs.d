@@ -175,7 +175,7 @@
 (when window-system
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
-  (menu-bar-mode -1)
+  ;(menu-bar-mode -1)
   )
 
 ;; helm
@@ -424,6 +424,15 @@
   :error-patterns ((warning (file-name) "[" line ", " column "]: " (message)))
   :modes typescript-mode)
 (add-to-list 'flycheck-checkers 'tslint)
+
+
+
+;; ============
+;; Elixir
+;; ============
+(require 'alchemist)
+(setq alchemist-mix-env "prod")
+(setq alchemist-hooks-compile-on-save t)
 
 
 ;; ============
