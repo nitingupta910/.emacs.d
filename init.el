@@ -1,17 +1,25 @@
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
+;;; init.el --- Emacs configuration of Nitin Gupta -*- lexical-binding: t; -*-
+
+;;; Commentary:
+;; Flat configuration of Emacs
+
+;;; Code:
+
+;;; Package management
+
+(setq inhibit-startup-message t)
+
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives
+       '("melpa" . "https://melpa.org/packages/"))
+
 (package-initialize)
 
-(setq user-emacs-directory "~/.emacs.d")
-
-(require 'cask "~/.cask/cask.el")
-(cask-initialize)
-
-;;
-;; BEGIN Generic settings
-;;
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 ;; See: https://www.emacswiki.org/emacs/ViewMode
 ;; I think toggling view-mode is better than toggle-read-only.
@@ -19,11 +27,6 @@
 
 ;; show vertical bar for cursor
 (setq-default cursor-type 'bar)
-
-;; projectile doesn't work on welcome screen (projectile bug)
-(setq inhibit-startup-screen t)
-
-(menu-bar-mode -1)
 
 ;; See: https://www.quora.com/profile/Stefan-Bucur/Posts/Enabling-Soft-Word-Wrap-in-Emacs
 (global-visual-line-mode 1)
@@ -33,23 +36,30 @@
 
 (setq password-cache-expiry nil)
 
-;; for smooth scrolling and disabling the automatic
-;; recentering of emacs when moving the cursor
-;(setq redisplay-dont-pause t
-;      scroll-margin 1
-;      scroll-step 1
-;      scroll-conservatively 10000
-;      scroll-preserve-screen-position 1)
-(smooth-scrolling-mode 1)
-
 ;; press any key to overwrite selected text
 (delete-selection-mode 1)
 
 ;; Show line numbers
 (global-linum-mode 1)
 
+;; show column number
+(column-number-mode t)
+
+;; turn-off emacs beeping.
+;; Ref: http://www.emacswiki.org/emacs/AlarmBell
+;;(setq visible-bell t)
+(setq ring-bell-function 'ignore)
+
 ; disable autosave
 (setq auto-save-default nil)
+
+;; configure backup file creation
+(setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
+(setq backup-by-copying t)
+(setq delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
 
 ;; Auto reload changes from disk.
 ;; This does not check or revert remote files,
@@ -57,7 +67,7 @@
 (global-auto-revert-mode)
 
 ;; ask before exiting emacs
-(setq confirm-kill-emacs 'y-or-n-p)
+;(setq confirm-kill-emacs 'y-or-n-p)
 
 ;; We don't want to type yes and no all the time so, do y and n
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -99,25 +109,18 @@
 (define-key global-map "\M-[1~" 'beginning-of-line)
 (define-key global-map [select] 'end-of-line)
 
-;;
-;; END Generic settings
-;;
+;; Hide GUI elements
+(when window-system
+  (tool-bar-mode -1)
+  (toggle-scroll-bar -1)
+  (menu-bar-mode -1)
+  )
 
-;; Open untitled new buffer like other text editors.
-(bind-key "M-n" 'untitled-new-buffer-with-select-major-mode)
-
-;; for moving buffers (buffer-move package)
-(global-set-key (kbd "<C-S-up>")     'buf-move-up)
-(global-set-key (kbd "<C-S-down>")   'buf-move-down)
-(global-set-key (kbd "<C-S-left>")   'buf-move-left)
-(global-set-key (kbd "<C-S-right>")  'buf-move-right)
-
-;; set font size
-;; Color definitions: https://github.com/morhetz/gruvbox
-;(setq gruvbox-fg0 "#fbf1c7")
-;(setq gruvbox-fg1 "#ebdbb2")
-;(setq gruvbox-fg2 "#d5c4a1")
-;(set-face-attribute 'default nil :height 180 :foreground gruvbox-fg1)
+;; Indentation in C (Linux kernel style)
+(setq c-default-style "linux")
+(setq c-backspace-function 'backward-delete-char)
+(add-hook 'c-mode-common-hook '(lambda ()
+                                 (setq-default indent-tabs-mode t)))
 
 (defun ng-get-ppi ()
   "Get display PPI. Do not run this function in non-graphic mode."
@@ -145,368 +148,224 @@
 
 (if (display-graphic-p)
     (funcall
-     (lambda()
-       (setq ng-ppi (floor (ng-get-ppi)))
+    (lambda()
+      (setq ng-ppi (floor (ng-get-ppi)))
 
-       ; mac air has ppi of 126.x
-       (if (<= ng-ppi 92)
-	   (setq ng-font-height 140)
-	 (if (<= ng-ppi 108)
-	     (setq ng-font-height 160)
-	   (if (<= ng-ppi 126)
-	       (setq ng-font-height 170)
-	     (setq ng-font-height 240))))
+      ; mac air has ppi of 126.x
+      (if (<= ng-ppi 92)
+    (setq ng-font-height 140)
+  (if (<= ng-ppi 108)
+      (setq ng-font-height 160)
+    (if (<= ng-ppi 126)
+        (setq ng-font-height 170)
+      (setq ng-font-height 240))))
 
-       (if (eq system-type 'darwin)
-	   (setq ng-font-face "Menlo")
-         (setq ng-font-face "Monospace"))
+      (if (eq system-type 'darwin)
+    (setq ng-font-face "Menlo")
+        (setq ng-font-face "Monospace"))
 
 
-       ; set larger font size on mac: say, 160 size becomes 220
-       (if (eq system-type 'darwin)
-	   (setq ng-font-height (floor (* 1.375 ng-font-height))))
+      ; set larger font size on mac: say, 160 size becomes 220
+      (if (eq system-type 'darwin)
+    (setq ng-font-height (floor (* 1.375 ng-font-height))))
 
-       (set-face-attribute 'default nil
-                           :height (symbol-value 'ng-font-height)
-                           :font (symbol-value 'ng-font-face))
-       )))
+      (set-face-attribute 'default nil
+                          :height (symbol-value 'ng-font-height)
+                          :font (symbol-value 'ng-font-face))
+      )))
 
-;(set-face-attribute 'region nil
-;                    :background "lightblue"
-;                    :foreground "black")
-
-;; Hide GUI elements
-(when window-system
-  (tool-bar-mode -1)
-  (toggle-scroll-bar -1)
-  ;(menu-bar-mode -1)
-  )
-
-;; helm
-(helm-mode 1)
-(global-set-key (kbd "M-x") #'helm-M-x)
-(global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
-(global-set-key (kbd "C-x C-f") #'helm-find-files)
-
-;(set-face-attribute 'helm-selection nil
-;		    :background "purple"
-;		    :foreground "black")
-
-;;; helm: completion using <tab> in helm-find-file
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebihnd tab to do persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z") 'helm-select-action)
-
-;; projectile
 ;;
-;; HACK: projectile causes slowdown when editing files over sshfs
-;; See: https://github.com/bbatsov/projectile/issues/657
-(projectile-global-mode)
-;(setq projectile-mode-line "foo")
-;; In large projects, caching can significantly speedup file and
-;; directory listings, making it display instantly.
-;; See: http://tuhdo.github.io/helm-projectile.html
-(setq projectile-enable-caching t)
-
-;; helm-dash
-(setq helm-dash-browser-func 'eww)
-
-;; helm-gtags (does not seems to work correct over tramp)
-(setq
- helm-gtags-ignore-case t
- helm-gtags-auto-update t
- helm-gtags-use-input-at-cursor t
- helm-gtags-pulse-at-cursor t
- helm-gtags-prefix-key "\C-cg"
- helm-gtags-suggested-key-mapping t
- )
-
-;; without this explicit require, I get this error:
-;; Symbol's value as variable is void: helm-gtags-mode-map
-;; during init.el loading during emacs startup
-(require 'helm-gtags)
-
-;(set-face-attribute 'helm-selection nil
-;                    :background "yellow"
-;                    :foreground "black")
-
-;; start-face is all gets displayed in terminal mode
-;; for ref. the other face is: pulse-higlight-face
-;; To get list of all face available:
-;;    M-x helm-colors RET
-(set-face-attribute 'pulse-highlight-start-face nil
-                    :background "yellow"
-                    :foreground "black")
-
-;; Treat .h files as C++ files unless overridden by dir specific config
-;; To use c-mode for .h files for a particular project (dir), create
-;; .dir-locals.el in that dir with this line:
-;;   ((c++-mode . ((mode . c))))
-;; (Source: http://stackoverflow.com/questions/3312114/how-to-tell-emacs-to-open-h-file-in-c-mode)
-;; (See second answer)
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
-(add-hook 'c-mode-hook 'helm-gtags-mode)
-(add-hook 'c++-mode-hook 'helm-gtags-mode)
-(add-hook 'asm-mode-hook 'helm-gtags-mode)
-
-(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-(define-key helm-gtags-mode-map (kbd "M-s") 'helm-gtags-select)
-(define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
-(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
-(define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
-(define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
-
-;;(define-key helm-gtags-mode-map (kbd "f6") 'helm-gtags-find-files)
-(global-set-key [f6] 'helm-gtags-find-files)
-
-
-;; helm-etags (etags is much slower than global/gtags)
-;;(global-set-key (kbd "M-.") 'helm-etags-select)
-;;(global-set-key (kbd "M-,") 'pop-tag-mark)
-
-;; ggtags (ggtags doesn't have good candidate selection method c.f. helm-gtags)
-;; (add-hook 'c-mode-common-hook
-;;           (lambda ()
-;;             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-;;               (ggtags-mode 1))))
-
-
-;; indentation (linux kernel style)
-(setq c-default-style "linux")
-(setq c-backspace-function 'backward-delete-char)
-(add-hook 'c-mode-common-hook '(lambda ()
-                                 (setq-default indent-tabs-mode t)))
-
-;; helm-git-grep
-(global-set-key (kbd "C-c g") 'helm-git-grep)
-;; Invoke `helm-git-grep' from isearch.
-(define-key isearch-mode-map (kbd "C-c g") 'helm-git-grep-from-isearch)
-;; Invoke `helm-git-grep' from other helm.
-(eval-after-load 'helm
-  '(define-key helm-map (kbd "C-c g") 'helm-git-grep-from-helm))
-
-;; company mode
-;; helm-gtags-find-files generates incorrect _local_ filename when
-;; working on a remote project with tramp. This results in company
-;; modes like company-clang to fail initiailization which hangs
-;; the emacs. So, don't enable globally on init.
+;; END Generic settings
 ;;
-;;(add-hook 'after-init-hook 'global-company-mode)
-
-;;----------------------
-;; golang
-(add-hook 'before-save-hook 'gofmt-before-save)
-
-;(add-hook 'go-mode-hook 'company-mode)
-(add-hook 'go-mode-hook (lambda ()
-			  (set (make-local-variable 'company-backends) '(company-go))
-			  (company-mode)))
-(add-hook 'go-mode-hook 'flycheck-mode)
-
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup))
-
-(defun my-go-mode-hook ()
-  (local-set-key (kbd "M-.") 'godef-jump)
-  (local-set-key (kbd "M-,") 'pop-tag-mark))
-
-(add-hook 'go-mode-hook 'my-go-mode-hook)
-
-;; fix environment variables from launching emacs GUI
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-env "GOPATH")
-  (exec-path-from-shell-copy-env "PATH"))
-
-;; Markdown
-
-(add-hook 'markdown-mode-hook (lambda()
-                                (flyspell-mode)))
-
-;; ==================
-;; Haskell
-;; ==================
-;(setq hindent-style "gibiansky")
-;(add-hook 'haskell-mode-hook (lambda ()
-;                               (set (make-local-variable 'company-backends) ;'(company-ghc))
-;                               (interactive-haskell-mode)
-;                               (hindent-mode)
-;                               (company-mode)
-;                               (flycheck-mode)))
-
-(add-hook 'haskell-mode-hook (lambda ()
-                               (intero-mode)
-                               (hindent-mode)
-                               (setq hindent-reformat-buffer-on-save t)))
 
 
-;; SCSS
-(add-hook 'scss-mode-hook
-          (lambda()
-            (flycheck-mode)
-            (setq css-indent-offset 2)
-            (company-mode)
-            (company-css)
-            ))
-
-;; remote path
-(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
-
-;; set theme
-;;(if (display-graphic-p)
-;;    (load-theme 'monokai t))
-;; neotree displays correctly on dark background terminal
-;; with this theme
-(load-theme 'monokai t)
-;(load-theme 'darktooth t)
-;(load-theme 'adwaita t)
-;(load-theme 'deeper-blue t)
-;(load-theme 'wombat t)
-;(load-theme 'dichromacy t)
-;(load-theme 'gruvbox t)
-
-;; show column number
-(column-number-mode t)
-
-;; turn-off emacs beeping.
-;; Ref: http://www.emacswiki.org/emacs/AlarmBell
-;;(setq visible-bell t)
-(setq ring-bell-function 'ignore)
-
-;; file/dir tree sidebar
-(global-set-key [f8] 'neotree-toggle)
-
-;; make indentation commands use space only (never tab character)
-(setq-default indent-tabs-mode nil) ; emacs 23.1, 24.2, default to t
-
-;; configure backup file creation
-(setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
-(setq backup-by-copying t)
-(setq delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      version-control t)
-
-;; multiple cursors (C-S-d isn't working))
-(global-set-key (kbd "C-d") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-S-d") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-d") 'mc/mark-all-like-this)
-
-;; defining my own minor mode for key overrides
-(defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
-
-(define-key my-keys-minor-mode-map (kbd "C-d") 'mc/mark-next-like-this)
-
-(define-minor-mode my-keys-minor-mode
-  "A minor mode so that my key settings override annoying major modes."
-  t " my-keys" 'my-keys-minor-mode-map)
-
-(my-keys-minor-mode 1)
-
-(defun indent-buffer ()
-  "Indent current buffer according to major mode."
-  (interactive)
-  (indent-region (point-min) (point-max)))
-
-;; js2-mode
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . js2-mode))
-
-;; typescript
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-
-;; typescript: tslint flycheck integration
-(require 'flycheck)
-(flycheck-define-checker tslint
-  "Use tslint to flycheck TypeScript code."
-  :command ("tslint"
-            "-f" source
-            "-c" (eval (projectile-expand-root "tslint.json"))
-            "-t" "prose")
-  :error-patterns ((warning (file-name) "[" line ", " column "]: " (message)))
-  :modes typescript-mode)
-(add-to-list 'flycheck-checkers 'tslint)
-
-
-
-;; ============
-;; Elixir
-;; ============
-(require 'alchemist)
-(setq alchemist-mix-env "prod")
-(setq alchemist-hooks-compile-on-save t)
-
-
-;; ============
-;; Protobuf
-;; ============
-(add-hook 'protobuf-mode-hook (lambda()
-                                (flycheck-mode)))
-
-;; ============
-;; C++
-;; ============
 ;;
-;; style I want to use in c++ mode
-;; (source: http://www.emacswiki.org/emacs/CPlusPlusMode)
-(c-add-style "my-style"
-             '("stroustrup"
-               (indent-tabs-mode . nil)        ; use spaces rather than tabs
-               (c-basic-offset . 4)            ; indent by four spaces
-               (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
-                                   (brace-list-open . 0)
-                                   (statement-case-open . +)))))
-
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-(require 'flycheck-irony)
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
-(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
-
-(defun my-company-irony-setup ()
-  (setq company-backends (delete 'company-semantic company-backends))
-  (eval-after-load 'company
-    '(add-to-list
-      'company-backends 'company-irony)))
-
-(setq irony-additional-clang-options '("-std=c++14"))
-
-(defun my-c++-mode-hook ()
-  (c-set-style "my-style")        ; use my-style defined above
-  (irony-mode)
-  (flycheck-mode)
-  (company-mode)
-  (local-set-key (kbd "C-c f") #'clang-format-buffer)
-  (my-company-irony-setup)
-  (c-toggle-hungry-state 1))
-
-(add-hook 'c++-mode-hook 'my-c++-mode-hook)
-
-;; =============
-;; CMake
-;; =============
-(cmake-ide-setup)
-
-;; =============
-;; Elm
-;; =============
+;; Usability related
 ;;
-(require 'elm-mode)
+(use-package smooth-scrolling
+  :ensure t
+  :config (smooth-scrolling-mode 1))
 
-(setq elm-tags-on-save t)
-(add-hook 'flycheck-mode-hook 'flycheck-elm-setup)
-(add-hook 'elm-mode-hook
+;; multiple cursors (C-S-d isn't working)
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C-d" . mc/mark-next-like-this)
+	 ("C-S-d" . mc/mark-previous-like-this)
+	 ("C-c C-d" . mc/mark-all-like-this)))
+
+(use-package buffer-move
+  :ensure t
+  :bind
+  (([(ctrl shift up)] . buf-move-up)
+   ([(ctrl shift down)] . buf-move-down)
+   ([(ctrl shift left)] . buf-move-left)
+   ([(ctrl shift right)] . buf-move-right)))
+
+(use-package untitled-new-buffer
+  :ensure t
+  :bind
+  (("M-n" . untitled-new-buffer-with-select-major-mode)))
+
+;;
+;; Helm stuff
+;;
+(use-package helm
+  :ensure    helm
+
+  :config    (setq helm-ff-transformer-show-only-basename nil
+                   helm-boring-file-regexp-list           '("\\.git$" "\\.svn$" "\\.elc$")
+                   helm-yank-symbol-first                 t
+                   helm-buffers-fuzzy-matching            t
+                   helm-ff-auto-update-initial-value      t
+                   helm-input-idle-delay                  0.1
+                   helm-idle-delay                        0.1)
+
+  :init      (progn
+               (require 'helm-config)
+               (helm-mode t)
+
+               (use-package helm-ag
+                 :ensure    helm-ag
+                 :bind      ("C-c a" . helm-ag))
+
+               (use-package helm-descbinds
+                 :ensure    helm-descbinds
+                 :bind      ("C-h b"   . helm-descbinds))
+
+               (use-package helm-projectile
+                 :ensure    helm-projectile
+                 :bind      ("C-c h" . helm-projectile))
+
+               (add-hook 'eshell-mode-hook
+                         #'(lambda ()
+                             (bind-key "M-p" 'helm-eshell-history eshell-mode-map)))
+
+               (use-package helm-swoop
+                 :ensure    helm-swoop
+                 :bind      (("C-c o" . helm-swoop)
+                             ("C-c M-o" . helm-multi-swoop)))
+
+               (bind-key "C-c C-SPC" 'helm-ff-run-toggle-auto-update helm-find-files-map))
+
+  :bind (("C-x r l" . helm-bookmarks)
+         ("C-x C-m" . helm-M-x)
+         ("C-h i"   . helm-google-suggest)
+         ("M-y"     . helm-show-kill-ring)
+         ("C-h a"   . helm-apropos)
+         ("C-x C-f" . helm-find-files)
+         ("C-x p" .   helm-top)
+         ("C-x C-b" . helm-buffers-list)
+         ;;; helm: completion using <tab> in helm-find-file
+         :map helm-map
+         ([tab] . helm-execute-persistent-action) ; rebind tab to do persistent action
+         ("C-i" . helm-execute-persistent-action) ; make TAB works in terminal
+	 ("C-c g" . helm-git-grep-from-helm)))
+
+(use-package projectile
+  :ensure t
+  :commands (projectile-find-file projectile-switch-project)
+  :init
+  (use-package helm-projectile :ensure t)
+  :config
+  (projectile-global-mode)
+  (setq projectile-enable-caching t))
+
+(use-package helm-projectile
+  :ensure t
+  :bind ("M-t" . helm-projectile-find-file)
+  :config
+  (helm-projectile-on))
+
+(use-package helm-gtags
+  :ensure t
+  :init
+  (setq
+    helm-gtags-ignore-case t
+    helm-gtags-auto-update t
+    helm-gtags-use-input-at-cursor t
+    helm-gtags-pulse-at-cursor t
+    helm-gtags-prefix-key "\C-cg"
+    helm-gtags-suggested-key-mapping t)
+  :bind
+  (("C-c g a" . helm-gtags-tags-in-this-function)
+    ("M-s" . helm-gtags-select)
+    ("M-." . helm-gtags-dwim)
+    ("M-," . helm-gtags-pop-stack)
+    ("C-c <" . helm-gtags-previous-history)
+    ("C-c >" . helm-gtags-next-history))
+  :config
+  (add-hook 'c-mode-hook 'helm-gtags-mode)
+  (add-hook 'c++-mode-hook 'helm-gtags-mode)
+  (add-hook 'asm-mode-hook 'helm-gtags-mode))
+
+(use-package helm-git-grep
+  :ensure t
+  :bind
+  (("C-c g" . helm-git-grep)
+   :map isearch-mode-map
+   ("C-c g" . helm-git-grep)))
+
+(use-package monokai-theme
+  :ensure t
+  :config (load-theme 'monokai t))
+
+(use-package markdown-mode
+  :ensure t
+  :config (flyspell-mode))
+
+(use-package magit
+  :ensure t)
+
+(use-package flycheck
+  :ensure t
+  :config
+  (add-hook 'after-init-hook 'global-flycheck-mode))
+
+(use-package company
+  :ensure t)
+
+;;
+;; Rust stuff
+;;
+(use-package rust-mode
+  :ensure t
+  :config
+
+  (add-hook 'before-save-hook
+            #'(lambda ()
+                (when (eq major-mode 'rust-mode)
+                  (rust-format-buffer))))
+
+  (use-package flycheck-rust
+    :ensure t
+    :config
+
+    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
+
+(use-package racer
+  :ensure t
+  :config
+  (add-hook 'rust-mode-hook #'cargo-minor-mode)
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'rust-mode-hook #'company-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode))
+
+(use-package cargo :ensure t)
+(use-package toml-mode :ensure t)
+
+;;
+;; Elm stuff
+;;
+(use-package elm-mode
+  :ensure t
+  :init
+  (setq
+   elm-tags-on-save t
+   elm-format-on-save t)
+  :config
+  (add-hook 'flycheck-mode-hook 'flycheck-elm-setup)
+
+  (add-hook 'elm-mode-hook
           (lambda ()
             (set (make-local-variable 'company-backends) '(company-elm))
             (local-set-key (kbd "M-.") 'elm-mode-goto-tag-at-point)
@@ -514,81 +373,73 @@
             (company-mode)
             (flycheck-mode)))
 
-;;(with-eval-after-load 'company
-;;  (add-to-list 'company-backends 'company-elm))
-(add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
+  (add-hook 'elm-mode-hook #'elm-oracle-setup-completion))
 
-(setq elm-format-on-save t)
+(use-package flycheck-elm
+  :ensure t)
 
-;;-----------------
-;; Rust
-(require 'rust-mode)
+;;
+;; Elixir stuff
+;;
+(use-package alchemist
+  :ensure t
+  :init
+  (setq
+   alchemist-mix-env "prod"
+   alchemist-hooks-compile-on-save t))
 
-(add-hook 'rust-mode-hook
-          (lambda ()
-            (racer-mode)
-            (cargo-minor-mode)
-            (flycheck-mode)
-            (add-hook 'before-save-hook 'rust-format-buffer)
-            (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)))
 
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
+;;
+;; Javascript and HTML stuff
+;;
+(use-package web-mode
+  :disabled t
+  :ensure t
+  :mode (("\\.html$" . web-mode)))
 
-(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+(use-package js2-mode
+  :ensure t
+  :mode "\\.js\\(?:on\\)?\\'"
+  :config
+  (progn
+    (setq js2-strict-missing-semi-warning nil)
+    (setq-default js2-basic-offset 2)))
 
-;; Org mode
-(setq org-support-shift-select 1)
+(use-package scss-mode
+  :ensure t
+  :config
+  (add-hook 'scss-mode-hook
+	    (lambda()
+	      (flycheck-mode)
+	      (setq css-indent-offset 2)
+	      (company-mode)
+	      (company-css)
+	      )))
 
-;; (add-hook 'org-mode-hook
-;;           (lambda ()
-;;             (variable-pitch-mode t)
-;;             (custom-set-faces
-;;              '(default ((t (:inherit nil :stipple nil :background "white smoke" :foreground "dim gray" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 143 :width normal :foundry "DAMA" :family "Ubuntu Mono"))))
-;;              )))
+;;
+;; Haskell stuff
+;;
+(use-package hindent :ensure t)
+(use-package intero :ensure t)
+(use-package haskell-mode
+  :ensure t
+  :config
+  (add-hook 'haskell-mode-hook (lambda ()
+                               (intero-mode)
+                               (hindent-mode)
+                               (setq hindent-reformat-buffer-on-save t))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(custom-safe-themes
+ '(package-selected-packages
    (quote
-    ("3fd0fda6c3842e59f3a307d01f105cce74e1981c6670bb17588557b4cebfe1a7" default)))
- '(ediff-merge-split-window-function (quote split-window-horizontally))
- '(ediff-split-window-function (quote split-window-horizontally))
- '(font-use-system-font t)
- '(org-babel-load-languages
-   (quote
-    ((sh . t)
-     (python . t)
-     (js . t)
-     (emacs-lisp . t)
-     (gnuplot . t)
-     (awk . t)
-     (C . t))))
- '(show-paren-mode t)
- '(tool-bar-mode nil))
-
- ;(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- ;'(default ((t (:family "Ubuntu Mono" :foundry "DAMA" :slant normal :weight normal :height 160 :width normal))))
- ;'(ediff-fine-diff-A ((t (:background "brightblack"))))
- ;'(ediff-fine-diff-B ((t (:background "color-24"))))
- ;'(org-level-1 ((t (:inherit variable-pitch :foreground "tan" :height 1.0))))
- ;'(org-level-2 ((t (:inherit variable-pitch :foreground "#A6E22E" :height 1.0)))))
+    (helm use-package smooth-scrolling projectile popup helm-core))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;'(ediff-current-diff-C ((t (:background "dark slate gray"))))
- ;'(ediff-even-diff-C ((t (:background "DeepSkyBlue4"))))
- ;'(ediff-odd-diff-A ((t (:background "dark olive green"))))
- ;'(ediff-odd-diff-B ((t (:background "dark olive green"))))
- ;'(ediff-odd-diff-C ((t (:background "dark olive green"))))
  )
