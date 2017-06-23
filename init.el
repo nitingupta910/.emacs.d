@@ -206,6 +206,15 @@
   :bind
   (("M-n" . untitled-new-buffer-with-select-major-mode)))
 
+;; ensure environment variables inside Emacs look the same as in the
+;; user's shell
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (push "HISTFILE" exec-path-from-shell-variables)
+  (setq exec-path-from-shell-check-startup-files nil)
+  (exec-path-from-shell-initialize))
+
 ;;
 ;; Helm stuff
 ;;
