@@ -257,7 +257,7 @@
                (bind-key "C-c C-SPC" 'helm-ff-run-toggle-auto-update helm-find-files-map))
 
   :bind (("C-x r l" . helm-bookmarks)
-         ("C-x C-m" . helm-M-x)
+         ("M-x" . helm-M-x)
          ("C-h i"   . helm-google-suggest)
          ("M-y"     . helm-show-kill-ring)
          ("C-h a"   . helm-apropos)
@@ -268,7 +268,7 @@
          :map helm-map
          ([tab] . helm-execute-persistent-action) ; rebind tab to do persistent action
          ("C-i" . helm-execute-persistent-action) ; make TAB works in terminal
-	 ("C-c g" . helm-git-grep-from-helm)))
+	 ("C-c g g" . helm-git-grep-from-helm)))
 
 (use-package projectile
   :ensure t
@@ -297,11 +297,12 @@
     helm-gtags-suggested-key-mapping t)
   :bind
   (("C-c g a" . helm-gtags-tags-in-this-function)
-    ("M-s" . helm-gtags-select)
-    ("M-." . helm-gtags-dwim)
-    ("M-," . helm-gtags-pop-stack)
-    ("C-c <" . helm-gtags-previous-history)
-    ("C-c >" . helm-gtags-next-history))
+   ("C-c g d" . helm-gtags-find-tag)
+   ("M-s" . helm-gtags-select)
+   ("M-." . helm-gtags-dwim)
+   ("M-," . helm-gtags-pop-stack)
+   ("C-c <" . helm-gtags-previous-history)
+   ("C-c >" . helm-gtags-next-history))
   :config
   (add-hook 'c-mode-hook 'helm-gtags-mode)
   (add-hook 'c++-mode-hook 'helm-gtags-mode)
@@ -310,9 +311,9 @@
 (use-package helm-git-grep
   :ensure t
   :bind
-  (("C-c g" . helm-git-grep)
+  (("C-c g x" . helm-git-grep)
    :map isearch-mode-map
-   ("C-c g" . helm-git-grep)))
+   ("C-c g x" . helm-git-grep)))
 
 (use-package monokai-theme
   :ensure t
