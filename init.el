@@ -393,6 +393,11 @@
 ;;
 (use-package alchemist
   :ensure t
+  :config
+  (add-hook 'elixir-mode-hook
+	    (lambda()
+	      (company-mode)
+	      ))
   :init
   (setq
    alchemist-mix-env "prod"
