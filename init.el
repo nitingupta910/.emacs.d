@@ -290,7 +290,7 @@
   :init
   (setq
     helm-gtags-ignore-case t
-    helm-gtags-auto-update t
+    helm-gtags-auto-update nil ; auto-update on save is too slow
     helm-gtags-use-input-at-cursor t
     helm-gtags-pulse-at-cursor t
     helm-gtags-prefix-key "\C-cg"
