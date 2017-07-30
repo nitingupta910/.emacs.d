@@ -174,20 +174,47 @@
                           :font (symbol-value 'ng-font-face))
       )))
 
-;; OSX clipboard copy/paste
-(defun pbcopy ()
+;; copy/paste from/to x-clipboard (for both osx and linux)
+;; source:http://blog.binchen.org/posts/copypaste-in-emacs.html
+(setq *is-a-mac* (eq system-type 'darwin))
+(setq *cygwin* (eq system-type 'cygwin) )
+(setq *linux* (or (eq system-type 'gnu/linux) (eq system-type 'linux)) )
+(defun copy-to-x-clipboard ()
   (interactive)
-  (let ((deactivate-mark t))
-    (call-process-region (point) (mark) "pbcopy")))
+  (if (region-active-p)
+      (progn
+        (cond
+         ((and (display-graphic-p) x-select-enable-clipboard)
+          (x-set-selection 'CLIPBOARD (buffer-substring (region-beginning) (region-end))))
+         (t (shell-command-on-region (region-beginning) (region-end)
+                                     (cond
+                                      (*cygwin* "putclip")
+                                      (*is-a-mac* "pbcopy")
+                                      (*linux* "xsel -ib")))
+            ))
+        (message "Yanked region to clipboard!")
+        (deactivate-mark))
+        (message "No region active; can't yank to clipboard!")))
 
-(defun pbpaste ()
+(defun paste-from-x-clipboard()
   (interactive)
-  (call-process-region (point) (if mark-active (mark) (point)) "pbpaste" t t))
+  (cond
+   ((and (display-graphic-p) x-select-enable-clipboard)
+    (insert (x-get-selection 'CLIPBOARD)))
+   (t (shell-command
+       (cond
+        (*cygwin* "getclip")
+        (*is-a-mac* "pbpaste")
+        (t "xsel -ob"))
+       1))
+   ))
 
-(defun pbcut ()
-  (interactive)
-  (pbcopy)
-  (delete-region (region-beginning) (region-end)))
+(defun my/paste-in-minibuffer ()
+  (local-set-key (kbd "M-y") 'paste-from-x-clipboard)
+  )
+
+(add-hook 'minibuffer-setup-hook 'my/paste-in-minibuffer)
+
 
 ;;
 ;; END Generic settings
