@@ -72,6 +72,11 @@
 ;; We don't want to type yes and no all the time so, do y and n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; tab defaults to 4 sparces
+(setq-default indent-tabs-mode nil
+              tab-width 4
+              indicate-empty-lines t)
+
 ;(setq tags-revert-without-query 1)
 
 ;; Show current file name using C-x C-p
