@@ -174,6 +174,21 @@
                           :font (symbol-value 'ng-font-face))
       )))
 
+;; OSX clipboard copy/paste
+(defun pbcopy ()
+  (interactive)
+  (let ((deactivate-mark t))
+    (call-process-region (point) (mark) "pbcopy")))
+
+(defun pbpaste ()
+  (interactive)
+  (call-process-region (point) (if mark-active (mark) (point)) "pbpaste" t t))
+
+(defun pbcut ()
+  (interactive)
+  (pbcopy)
+  (delete-region (region-beginning) (region-end)))
+
 ;;
 ;; END Generic settings
 ;;
