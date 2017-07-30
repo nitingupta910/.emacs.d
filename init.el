@@ -72,7 +72,7 @@
 ;; We don't want to type yes and no all the time so, do y and n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(setq tags-revert-without-query 1)
+;(setq tags-revert-without-query 1)
 
 ;; Show current file name using C-x C-p
 ;; Source: https://camdez.com/blog/2013/11/14/emacs-show-buffer-file-name/
@@ -332,7 +332,7 @@
   :init
   (setq
     helm-gtags-ignore-case t
-    helm-gtags-auto-update nil ; auto-update on save is too slow
+    ;helm-gtags-auto-update t
     helm-gtags-use-input-at-cursor t
     helm-gtags-pulse-at-cursor t
     helm-gtags-prefix-key "\C-cg"
