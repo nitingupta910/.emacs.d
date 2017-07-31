@@ -282,7 +282,7 @@
 
                (use-package helm-ag
                  :ensure    helm-ag
-                 :bind      ("C-c a" . helm-ag))
+                 :bind      ("C-c x" . helm-projectile-ag))
 
                (use-package helm-descbinds
                  :ensure    helm-descbinds
