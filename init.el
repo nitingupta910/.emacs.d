@@ -360,6 +360,16 @@
   (add-hook 'c++-mode-hook 'helm-gtags-mode)
   (add-hook 'asm-mode-hook 'helm-gtags-mode))
 
+(add-hook 'c-mode-hook 'my-c-mode-hook)
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
+
+; Prevent C-d to be bound to c-electric-delete-forward
+(defun my-c-mode-hook ()
+  (local-set-key (kbd "C-d") 'mc/mark-next-like-this))
+
+(defun my-c++-mode-hook ()
+  (local-set-key (kbd "C-d") 'mc/mark-next-like-this))
+
 (use-package helm-git-grep
   :ensure t
   :bind
