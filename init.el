@@ -163,12 +163,12 @@
 
       ; mac air has ppi of 126.x
       (if (<= ng-ppi 92)
-    (setq ng-font-height 140)
-  (if (<= ng-ppi 108)
-      (setq ng-font-height 160)
-    (if (<= ng-ppi 126)
-        (setq ng-font-height 170)
-      (setq ng-font-height 240))))
+          (setq ng-font-height 140)
+        (if (<= ng-ppi 108)
+            (setq ng-font-height 170)
+          (if (<= ng-ppi 126)
+              (setq ng-font-height 170)
+            (setq ng-font-height 240))))
 
       (if (eq system-type 'darwin)
     (setq ng-font-face "Menlo")
