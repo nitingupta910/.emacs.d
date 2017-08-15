@@ -77,6 +77,11 @@
               tab-width 4
               indicate-empty-lines t)
 
+;; emacs-mac specific. Use alt as the meta key on mac to
+;; match with Cocoa Emacs.
+(setq mac-option-modifier 'meta)
+(setq mac-command-modifier 'super)
+
 ;(setq tags-revert-without-query 1)
 
 ;; Show current file name using C-x C-p
@@ -448,7 +453,7 @@
   :init
   (setq
    alchemist-mix-env "prod"
-   alchemist-hooks-compile-on-save t))
+   alchemist-hooks-compile-on-save nil))
 
 
 ;;
