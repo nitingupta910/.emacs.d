@@ -82,7 +82,7 @@
 (setq mac-option-modifier 'meta)
 (setq mac-command-modifier 'super)
 
-;(setq tags-revert-without-query 1)
+(setq tags-revert-without-query 1)
 
 ;; Show current file name using C-x C-p
 ;; Source: https://camdez.com/blog/2013/11/14/emacs-show-buffer-file-name/
