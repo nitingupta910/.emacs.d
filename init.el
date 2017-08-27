@@ -467,12 +467,23 @@
 
 
 ;;
+;; GraphQL
+;;
+(use-package graphql-mode
+  :ensure t
+  :mode (("\\.graphql$" . graphql-mode)))
+
+;;
 ;; Javascript and HTML stuff
 ;;
 (use-package web-mode
-  :disabled t
   :ensure t
-  :mode (("\\.html$" . web-mode)))
+  :mode (("\\.jsx$" . web-mode)
+         ("\\.html$" . web-mode))
+  :config
+  (setq web-mode-code-indent-offset 2
+        web-mode-css-indent-offset 2
+        web-mode-markup-indent-offset 2))
 
 (use-package js2-mode
   :ensure t
@@ -514,7 +525,7 @@
  '(ediff-split-window-function (quote split-window-horizontally))
  '(package-selected-packages
    (quote
-	(helm use-package smooth-scrolling projectile popup helm-core)))
+    (helm use-package smooth-scrolling projectile popup helm-core)))
  '(split-height-threshold 200)
  '(split-width-threshold 0))
 (custom-set-faces
