@@ -346,7 +346,7 @@
     helm-gtags-use-input-at-cursor t
     helm-gtags-pulse-at-cursor t
     helm-gtags-prefix-key "\C-cg"
-    helm-gtags-suggested-key-mapping t)
+    helm-gtags-suggested-key-mapping nil)
   :bind
   (("C-c g a" . helm-gtags-tags-in-this-function)
    ("C-c g d" . helm-gtags-find-tag)
