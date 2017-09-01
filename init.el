@@ -77,11 +77,6 @@
               tab-width 4
               indicate-empty-lines t)
 
-;; emacs-mac specific. Use alt as the meta key on mac to
-;; match with Cocoa Emacs.
-(setq mac-option-modifier 'meta)
-(setq mac-command-modifier 'super)
-
 (setq tags-revert-without-query 1)
 
 ;; Show current file name using C-x C-p
@@ -126,6 +121,58 @@
   (menu-bar-mode -1)
   )
 
+
+;; Mac OSX specific settings
+(defun text-scale-reset ()
+  "Reset text scale."
+  (interactive)
+  (text-scale-adjust 0))
+
+(let ((is-mac (string-equal system-type "darwin")))
+(when is-mac
+  ;; make fonts look better with anti-aliasing
+  (setq mac-allow-anti-aliasing t)
+  ;; delete files by moving them to the trash
+  (setq delete-by-moving-to-trash t)
+  (setq trash-directory "~/.Trash")
+
+  ;; Don't make new frames when opening a new file with Emacs
+  (setq ns-pop-up-frames nil)
+
+  ;; non-lion fullscreen
+  (setq ns-use-native-fullscreen nil)
+
+  ;; Set modifier keys
+  (setq mac-option-modifier 'meta) ;; Bind meta to ALT
+  (setq mac-command-modifier 'super) ;; Bind apple/command to super if you want
+  (setq mac-function-modifier 'hyper) ;; Bind function key to hyper if you want
+  (setq mac-right-option-modifier 'none) ;; unbind right key for accented input
+
+  ;; Make forward delete work
+  (global-set-key (kbd "<H-backspace>") 'delete-forward-char)
+
+  ;; Keybindings
+  (global-set-key (kbd "s-=") 'text-scale-increase)
+  (global-set-key (kbd "s--") 'text-scale-decrease)
+  (global-set-key (kbd "s-0") 'text-scale-reset)
+  ;(global-set-key (kbd "s-q") 'save-buffers-kill-terminal)
+  (global-set-key (kbd "s-v") 'paste-from-x-clipboard)
+  (global-set-key (kbd "s-c") 'copy-to-x-clipboard)
+  (global-set-key (kbd "s-a") 'mark-whole-buffer)
+  (global-set-key (kbd "s-x") 'cut-to-x-clipboard)
+  (global-set-key (kbd "s-w") 'delete-window)
+  (global-set-key (kbd "s-W") 'delete-frame)
+  (global-set-key (kbd "s-n") 'make-frame)
+  (global-set-key (kbd "s-z") 'undo)
+  (global-set-key (kbd "s-s")
+                  (lambda ()
+                    (interactive)
+                    (call-interactively (key-binding "\C-x\C-s"))))
+  (global-set-key (kbd "s-Z") 'undo-tree-redo)
+  (global-set-key (kbd "C-s-f") 'toggle-frame-fullscreen)
+  ;; Emacs sometimes registers C-s-f as this weird keycode
+  (global-set-key (kbd "<C-s-268632070>") 'toggle-frame-fullscreen)))
+  
 ;; Indentation in C (Linux kernel style)
 (setq c-default-style "linux")
 (setq c-backspace-function 'backward-delete-char)
@@ -218,6 +265,11 @@
         (t "xsel -ob"))
        1))
    ))
+
+(defun cut-to-x-clipboard ()
+  (interactive)
+  (copy-to-x-clipboard)
+  (kill-region (region-beginning) (region-end)))
 
 (defun my/paste-in-minibuffer ()
   (local-set-key (kbd "M-y") 'paste-from-x-clipboard)
