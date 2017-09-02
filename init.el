@@ -556,6 +556,10 @@
 	      (company-css)
 	      )))
 
+(use-package coffee-mode
+  :commands coffee-mode
+  :mode "\\.cson\\'")
+
 ;;
 ;; Haskell stuff
 ;;
