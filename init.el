@@ -168,6 +168,10 @@
                   (lambda ()
                     (interactive)
                     (call-interactively (key-binding "\C-x\C-s"))))
+  (global-set-key (kbd "s-f")
+                  (lambda ()
+                    (interactive)
+                    (call-interactively (key-binding "\C-s"))))
   (global-set-key (kbd "s-Z") 'undo-tree-redo)
   (global-set-key (kbd "C-s-f") 'toggle-frame-fullscreen)
   ;; Emacs sometimes registers C-s-f as this weird keycode
@@ -180,7 +184,7 @@
                                  (setq-default indent-tabs-mode t)))
 
 (defun ng-get-ppi ()
-  "Get display PPI. Do not run this function in non-graphic mode."
+  "Get display PPI.  Do not run this function in non-graphic mode."
   (setq ng-disp-attrs (car (display-monitor-attributes-list)))
 
   (setq ng-mm-size (assq 'mm-size ng-disp-attrs))
@@ -382,6 +386,9 @@
   :commands (projectile-find-file projectile-switch-project)
   :init
   (use-package helm-projectile :ensure t)
+  :bind
+  (:map projectile-mode-map
+        ("C-\\" . helm-projectile))
   :config
   (projectile-global-mode)
   (setq projectile-enable-caching t))
