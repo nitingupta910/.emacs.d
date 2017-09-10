@@ -236,6 +236,9 @@
 (setq *is-a-mac* (eq system-type 'darwin))
 (setq *cygwin* (eq system-type 'cygwin) )
 (setq *linux* (or (eq system-type 'gnu/linux) (eq system-type 'linux)) )
+
+(setq x-select-enable-clipboard nil)
+
 (defun copy-to-x-clipboard ()
   (interactive)
   (if (region-active-p)
@@ -429,9 +432,12 @@
    :map isearch-mode-map
    ("C-c g x" . helm-git-grep)))
 
-(use-package monokai-theme
-  :ensure t
-  :config (load-theme 'monokai t))
+;; Theme config
+;(use-package monokai-theme
+;  :ensure t
+;  :config (load-theme 'monokai t))
+
+(load-theme 'adwaita t)
 
 (use-package markdown-mode
   :ensure t
