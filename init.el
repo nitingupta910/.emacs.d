@@ -214,9 +214,9 @@
 
       ; mac air has ppi of 126.x
       (if (<= ng-ppi 92)
-          (setq ng-font-height 140)
+          (setq ng-font-height 130)
         (if (<= ng-ppi 108)
-            (setq ng-font-height 160)
+            (setq ng-font-height 140)
           (if (<= ng-ppi 126)
               (setq ng-font-height 140)
             (setq ng-font-height 240))))
@@ -530,6 +530,12 @@
    alchemist-mix-env "prod"
    alchemist-hooks-compile-on-save nil))
 
+
+;;
+;; JSON
+;;
+(use-package json-mode
+  :ensure t)
 
 ;;
 ;; GraphQL
