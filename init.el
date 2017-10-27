@@ -40,6 +40,7 @@
 (delete-selection-mode 1)
 
 ;; Show line numbers
+;; TODO: replace with (global-display-line-numbers-mode) in emacs 26
 (global-linum-mode 1)
 
 ;; show column number
