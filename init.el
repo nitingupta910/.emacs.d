@@ -236,38 +236,9 @@
       )))
 
 
-;;
-;; Clipboard releated
-;;
 (use-package simpleclip :ensure t
   :config
   (simpleclip-mode 1))
-
-(defun copy-to-x-clipboard ()
-  "Copy from system clipboard."
-  (interactive)
-  (let ((thing (if (region-active-p)
-                   (buffer-substring-no-properties (region-beginning) (region-end))
-                 (thing-at-point 'symbol))))
-    (simpleclip-set-contents thing)
-    (message "copied to system clipboard.")))
-
-(defun paste-from-x-clipboard()
-  "Paste from system clipboard."
-  (interactive)
-  (insert (simpleclip-get-contents)))
-
-(defun cut-to-x-clipboard ()
-  "Copy to system clipboard and delete region."
-  (interactive)
-  (copy-to-x-clipboard)
-  (kill-region (region-beginning) (region-end)))
-
-(defun my/paste-in-minibuffer ()
-  "Press `Alt-Y' to paste from clibpoard when in minibuffer."
-  (local-set-key (kbd "M-y") 'paste-from-x-clipboard))
-
-(add-hook 'minibuffer-setup-hook 'my/paste-in-minibuffer)
 
 ;;
 ;; END Generic settings
