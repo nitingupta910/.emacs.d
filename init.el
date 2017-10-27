@@ -235,59 +235,39 @@
                           :font (symbol-value 'ng-font-face))
       )))
 
-;; copy/paste from/to x-clipboard (for both osx and linux)
-;; source:http://blog.binchen.org/posts/copypaste-in-emacs.html
-(setq *is-a-mac* (eq system-type 'darwin))
-(setq *cygwin* (eq system-type 'cygwin) )
-(setq *linux* (or (eq system-type 'gnu/linux) (eq system-type 'linux)) )
 
-(setq x-select-enable-clipboard nil)
+;;
+;; Clipboard releated
+;;
+(use-package simpleclip :ensure t
+  :config
+  (simpleclip-mode 1))
 
 (defun copy-to-x-clipboard ()
+  "Copy from system clipboard."
   (interactive)
-  (if (region-active-p)
-      (progn
-        (cond
-         ((and (display-graphic-p) x-select-enable-clipboard)
-          (x-set-selection 'CLIPBOARD (buffer-substring (region-beginning) (region-end))))
-         (t (shell-command-on-region (region-beginning) (region-end)
-                                     (cond
-                                      (*cygwin* "putclip")
-                                      (*is-a-mac* "pbcopy")
-                                      (*linux* "xsel -ib")))
-            ))
-        (message "Yanked region to clipboard!")
-        (deactivate-mark))
-        (message "No region active; can't yank to clipboard!")))
+  (let ((thing (if (region-active-p)
+                   (buffer-substring-no-properties (region-beginning) (region-end))
+                 (thing-at-point 'symbol))))
+    (simpleclip-set-contents thing)
+    (message "copied to system clipboard.")))
 
 (defun paste-from-x-clipboard()
+  "Paste from system clipboard."
   (interactive)
-  (cond
-   ((and (display-graphic-p) x-select-enable-clipboard)
-    (insert (x-get-selection 'CLIPBOARD)))
-   (t (shell-command
-       (cond
-        (*cygwin* "getclip")
-        (*is-a-mac* "pbpaste")
-        (t "xsel -ob"))
-       1))
-   ))
+  (insert (simpleclip-get-contents)))
 
 (defun cut-to-x-clipboard ()
+  "Copy to system clipboard and delete region."
   (interactive)
   (copy-to-x-clipboard)
   (kill-region (region-beginning) (region-end)))
 
 (defun my/paste-in-minibuffer ()
-  (local-set-key (kbd "M-y") 'paste-from-x-clipboard)
-  )
+  "Press `Alt-Y' to paste from clibpoard when in minibuffer."
+  (local-set-key (kbd "M-y") 'paste-from-x-clipboard))
 
 (add-hook 'minibuffer-setup-hook 'my/paste-in-minibuffer)
-
-(use-package simpleclip :ensure t
-  :diminish simpleclip-mode
-  :config
-  (simpleclip-mode 1))
 
 ;;
 ;; END Generic settings
