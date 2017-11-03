@@ -342,7 +342,7 @@
   (:map projectile-mode-map
         ("C-\\" . helm-projectile))
   :config
-  (projectile-global-mode)
+                                        ;(projectile-global-mode)
 										;(setq projectile-enable-caching t)
   )
 
@@ -400,8 +400,15 @@
 (load-theme 'adwaita t)
 
 (use-package markdown-mode
-  :ensure t
-  :config (flyspell-mode))
+  :defer t
+  :mode ("\\.md\\'" . gfm-mode)
+  :init
+  ;; Prevent ~1.7 second delay by avoiding `char-displayable-p'.  See
+  ;; https://github.com/jrblevin/markdown-mode/issues/264
+  (setq markdown-url-compose-char ?∞)
+  (setq markdown-blockquote-display-char "▌")
+  (setq markdown-hr-display-char ?─)
+  (setq markdown-definition-display-char ?⁘))
 
 (use-package magit
   :ensure t)
@@ -561,7 +568,7 @@
  '(ediff-split-window-function (quote split-window-horizontally))
  '(package-selected-packages
    (quote
-    (simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
+    (esup simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
  '(split-height-threshold 200)
  '(split-width-threshold 0))
 (custom-set-faces
