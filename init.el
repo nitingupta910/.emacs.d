@@ -342,7 +342,7 @@
   (:map projectile-mode-map
         ("C-\\" . helm-projectile))
   :config
-                                        ;(projectile-global-mode)
+  (projectile-global-mode)
 										;(setq projectile-enable-caching t)
   )
 
