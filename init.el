@@ -591,6 +591,7 @@
    (quote
     (esup simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
  '(split-height-threshold 200)
+ '(tramp-remote-path (quote (tramp-own-remote-path)) nil (tramp))
  '(split-width-threshold 0))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -598,3 +599,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
