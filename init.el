@@ -177,10 +177,11 @@
 ;; Indentation in C (Linux kernel style)
 ;(setq c-default-style "linux"
 ;      c-basic-offset 8)
-;(setq c-backspace-function 'backward-delete-char)
+(setq c-backspace-function 'backward-delete-char)
 (add-hook 'c-mode-common-hook '(lambda ()
                                  (setq-default c-default-style "linux"
                                                c-basic-offset 8
+					       c-backspace-function 'backward-delete-char
 					       tab-width 8
                                                indent-tabs-mode t)))
 
