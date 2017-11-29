@@ -175,10 +175,14 @@
   (global-set-key (kbd "<C-s-268632070>") 'toggle-frame-fullscreen)))
   
 ;; Indentation in C (Linux kernel style)
-(setq c-default-style "linux")
-(setq c-backspace-function 'backward-delete-char)
+;(setq c-default-style "linux"
+;      c-basic-offset 8)
+;(setq c-backspace-function 'backward-delete-char)
 (add-hook 'c-mode-common-hook '(lambda ()
-                                 (setq-default indent-tabs-mode t)))
+                                 (setq-default c-default-style "linux"
+                                               c-basic-offset 8
+					       tab-width 8
+                                               indent-tabs-mode t)))
 
 (defun ng-get-ppi ()
   "Get display PPI.  Do not run this function in non-graphic mode."
