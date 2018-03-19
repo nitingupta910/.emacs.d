@@ -229,8 +229,8 @@
 
 
       ; set larger font size on mac: say, 160 size becomes 232
-      (if (eq system-type 'darwin)
-		  (setq ng-font-height (floor (* 1.45 ng-font-height))))
+                                        ;(if (eq system-type 'darwin)
+                                        ;	  (setq ng-font-height (floor (* 1.45 ng-font-height))))
 
       (set-face-attribute 'default nil
                           :height (symbol-value 'ng-font-height)
@@ -566,8 +566,8 @@
    (quote
     (esup simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
  '(split-height-threshold 200)
- '(tramp-remote-path (quote (tramp-own-remote-path)) nil (tramp))
- '(split-width-threshold 0))
+ '(split-width-threshold 0)
+ '(tramp-remote-path (quote (tramp-own-remote-path)) nil (tramp)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
