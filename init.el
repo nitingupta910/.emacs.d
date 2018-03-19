@@ -472,31 +472,6 @@
 (use-package toml-mode :ensure t)
 
 ;;
-;; Elm stuff
-;;
-(use-package elm-mode
-  :ensure t
-  :init
-  (setq
-   elm-tags-on-save t
-   elm-format-on-save t)
-  :config
-  (add-hook 'flycheck-mode-hook 'flycheck-elm-setup)
-
-  (add-hook 'elm-mode-hook
-          (lambda ()
-            (set (make-local-variable 'company-backends) '(company-elm))
-            (local-set-key (kbd "M-.") 'elm-mode-goto-tag-at-point)
-            (local-set-key (kbd "M-,") 'pop-tag-mark)
-            (company-mode)
-            (flycheck-mode)))
-
-  (add-hook 'elm-mode-hook #'elm-oracle-setup-completion))
-
-(use-package flycheck-elm
-  :ensure t)
-
-;;
 ;; Elixir stuff
 ;;
 (use-package alchemist
