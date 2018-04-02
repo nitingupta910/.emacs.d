@@ -175,9 +175,9 @@
   (global-set-key (kbd "<C-s-268632070>") 'toggle-frame-fullscreen)))
   
 ;; Indentation in C (Linux kernel style)
-;(setq c-default-style "linux"
-;      c-basic-offset 8)
-;(setq c-backspace-function 'backward-delete-char)
+(setq c-default-style "linux"
+      c-basic-offset 8)
+(setq c-backspace-function 'backward-delete-char)
 (add-hook 'c-mode-hook '(lambda ()
 			  (setq-default c-default-style "linux"
 					c-basic-offset 8
