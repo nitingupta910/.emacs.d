@@ -230,7 +230,7 @@
 
       ; set larger font size on mac: say, 160 size becomes 232
       (if (eq system-type 'darwin)
-          (setq ng-font-height (floor (* 1.45 ng-font-height))))
+          (setq ng-font-height (floor (* 1.2 ng-font-height))))
 
       (set-face-attribute 'default nil
                           :height (symbol-value 'ng-font-height)
