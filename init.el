@@ -12,7 +12,7 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-       '("melpa" . "https://melpa.org/packages/"))
+	     '("melpa" . "https://melpa.org/packages/"))
 
 (package-initialize)
 
@@ -51,7 +51,7 @@
 ;;(setq visible-bell t)
 (setq ring-bell-function 'ignore)
 
-; disable autosave
+					; disable autosave
 (setq auto-save-default nil)
 
 ;; configure backup file creation
@@ -68,7 +68,7 @@
 (global-auto-revert-mode)
 
 ;; ask before exiting emacs
-;(setq confirm-kill-emacs 'y-or-n-p)
+					;(setq confirm-kill-emacs 'y-or-n-p)
 
 ;; We don't want to type yes and no all the time so, do y and n
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -130,50 +130,50 @@
   (text-scale-adjust 0))
 
 (let ((is-mac (string-equal system-type "darwin")))
-(when is-mac
-  ;; make fonts look better with anti-aliasing
-  (setq mac-allow-anti-aliasing t)
-  ;; delete files by moving them to the trash
-  (setq delete-by-moving-to-trash t)
-  (setq trash-directory "~/.Trash")
+  (when is-mac
+    ;; make fonts look better with anti-aliasing
+    (setq mac-allow-anti-aliasing t)
+    ;; delete files by moving them to the trash
+    (setq delete-by-moving-to-trash t)
+    (setq trash-directory "~/.Trash")
 
-  ;; Don't make new frames when opening a new file with Emacs
-  (setq ns-pop-up-frames nil)
+    ;; Don't make new frames when opening a new file with Emacs
+    (setq ns-pop-up-frames nil)
 
-  ;; non-lion fullscreen
-  (setq ns-use-native-fullscreen nil)
+    ;; non-lion fullscreen
+    (setq ns-use-native-fullscreen nil)
 
-  ;; Set modifier keys
-  (setq mac-option-modifier 'meta) ;; Bind meta to ALT
-  (setq mac-command-modifier 'super) ;; Bind apple/command to super if you want
-  (setq mac-function-modifier 'hyper) ;; Bind function key to hyper if you want
-  (setq mac-right-option-modifier 'none) ;; unbind right key for accented input
+    ;; Set modifier keys
+    (setq mac-option-modifier 'meta) ;; Bind meta to ALT
+    (setq mac-command-modifier 'super) ;; Bind apple/command to super if you want
+    (setq mac-function-modifier 'hyper) ;; Bind function key to hyper if you want
+    (setq mac-right-option-modifier 'none) ;; unbind right key for accented input
 
-  ;; Make forward delete work
-  (global-set-key (kbd "<H-backspace>") 'delete-forward-char)
+    ;; Make forward delete work
+    (global-set-key (kbd "<H-backspace>") 'delete-forward-char)
 
-  ;; Keybindings
-  (global-set-key (kbd "s-=") 'text-scale-increase)
-  (global-set-key (kbd "s--") 'text-scale-decrease)
-  (global-set-key (kbd "s-0") 'text-scale-reset)
-  (global-set-key (kbd "s-a") 'mark-whole-buffer)
-  (global-set-key (kbd "s-w") 'delete-window)
-  (global-set-key (kbd "s-W") 'delete-frame)
-  (global-set-key (kbd "s-n") 'make-frame)
-  (global-set-key (kbd "s-z") 'undo)
-  (global-set-key (kbd "s-s")
-                  (lambda ()
-                    (interactive)
-                    (call-interactively (key-binding "\C-x\C-s"))))
-  (global-set-key (kbd "s-f")
-                  (lambda ()
-                    (interactive)
-                    (call-interactively (key-binding "\C-s"))))
-  (global-set-key (kbd "s-Z") 'undo-tree-redo)
-  (global-set-key (kbd "C-s-f") 'toggle-frame-fullscreen)
-  ;; Emacs sometimes registers C-s-f as this weird keycode
-  (global-set-key (kbd "<C-s-268632070>") 'toggle-frame-fullscreen)))
-  
+    ;; Keybindings
+    (global-set-key (kbd "s-=") 'text-scale-increase)
+    (global-set-key (kbd "s--") 'text-scale-decrease)
+    (global-set-key (kbd "s-0") 'text-scale-reset)
+    (global-set-key (kbd "s-a") 'mark-whole-buffer)
+    (global-set-key (kbd "s-w") 'delete-window)
+    (global-set-key (kbd "s-W") 'delete-frame)
+    (global-set-key (kbd "s-n") 'make-frame)
+    (global-set-key (kbd "s-z") 'undo)
+    (global-set-key (kbd "s-s")
+		    (lambda ()
+		      (interactive)
+		      (call-interactively (key-binding "\C-x\C-s"))))
+    (global-set-key (kbd "s-f")
+		    (lambda ()
+		      (interactive)
+		      (call-interactively (key-binding "\C-s"))))
+    (global-set-key (kbd "s-Z") 'undo-tree-redo)
+    (global-set-key (kbd "C-s-f") 'toggle-frame-fullscreen)
+    ;; Emacs sometimes registers C-s-f as this weird keycode
+    (global-set-key (kbd "<C-s-268632070>") 'toggle-frame-fullscreen)))
+
 ;; Indentation in C (Linux kernel style)
 (setq c-default-style "linux"
       c-basic-offset 8)
@@ -194,8 +194,8 @@
   (setq ng-mm-height (nth 2 ng-mm-size))
 
   (setq ng-diag-mm (sqrt (+
-                        (expt ng-mm-width 2)
-                        (expt ng-mm-height 2))))
+			  (expt ng-mm-width 2)
+			  (expt ng-mm-height 2))))
 
   (setq ng-diag-inches (* ng-diag-mm 0.0393701))
 
@@ -204,38 +204,38 @@
   (setq ng-pixel-height (nth 4 ng-geom))
 
   (setq ng-diag-pixels (sqrt (+
-                        (expt ng-pixel-width 2)
-                        (expt ng-pixel-height 2))))
+			      (expt ng-pixel-width 2)
+			      (expt ng-pixel-height 2))))
 
   (/ ng-diag-pixels ng-diag-inches))
 
 (if (display-graphic-p)
     (funcall
-    (lambda()
-      (setq ng-ppi (floor (ng-get-ppi)))
+     (lambda()
+       (setq ng-ppi (floor (ng-get-ppi)))
 
-      ; mac air has ppi of 126.x
-      (if (<= ng-ppi 92)
-          (setq ng-font-height 130)
-        (if (<= ng-ppi 108)
-            (setq ng-font-height 180)
-          (if (<= ng-ppi 126)
-              (setq ng-font-height 140)
-            (setq ng-font-height 240))))
+					; mac air has ppi of 126.x
+       (if (<= ng-ppi 92)
+	   (setq ng-font-height 130)
+	 (if (<= ng-ppi 108)
+	     (setq ng-font-height 140)
+	   (if (<= ng-ppi 126)
+	       (setq ng-font-height 140)
+	     (setq ng-font-height 240))))
 
-      (if (eq system-type 'darwin)
-    (setq ng-font-face "Menlo")
-        (setq ng-font-face "Monospace"))
+       (if (eq system-type 'darwin)
+	   (setq ng-font-face "Menlo")
+	 (setq ng-font-face "Monospace"))
 
 
-      ; set larger font size on mac: say, 160 size becomes 232
-      (if (eq system-type 'darwin)
-          (setq ng-font-height (floor (* 1.2 ng-font-height))))
+					; set larger font size on mac: say, 160 size becomes 232
+       (if (eq system-type 'darwin)
+	   (setq ng-font-height (floor (* 1.2 ng-font-height))))
 
-      (set-face-attribute 'default nil
-                          :height (symbol-value 'ng-font-height)
-                          :font (symbol-value 'ng-font-face))
-      )))
+       (set-face-attribute 'default nil
+			   :height (symbol-value 'ng-font-height)
+			   :font (symbol-value 'ng-font-face))
+       )))
 
 
 (use-package simpleclip :ensure t
@@ -348,7 +348,7 @@
         ("C-\\" . helm-projectile))
   :config
   (projectile-global-mode)
-										;(setq projectile-enable-caching t)
+  (setq projectile-enable-caching t)
   )
 
 (use-package helm-projectile
@@ -361,12 +361,12 @@
   :ensure t
   :init
   (setq
-    helm-gtags-ignore-case t
-    ;helm-gtags-auto-update t
-    helm-gtags-use-input-at-cursor t
-    helm-gtags-pulse-at-cursor t
-    helm-gtags-prefix-key "\C-cg"
-    helm-gtags-suggested-key-mapping nil)
+   helm-gtags-ignore-case t
+					;helm-gtags-auto-update t
+   helm-gtags-use-input-at-cursor t
+   helm-gtags-pulse-at-cursor t
+   helm-gtags-prefix-key "\C-cg"
+   helm-gtags-suggested-key-mapping nil)
   :bind
   (("C-c g a" . helm-gtags-tags-in-this-function)
    ("C-c g d" . helm-gtags-find-tag)
@@ -383,7 +383,7 @@
 (add-hook 'c-mode-hook 'my-c-mode-hook)
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 
-; Prevent C-d to be bound to c-electric-delete-forward
+					; Prevent C-d to be bound to c-electric-delete-forward
 (defun my-c-mode-hook ()
   (local-set-key (kbd "C-d") 'mc/mark-next-like-this))
 
@@ -401,7 +401,7 @@
   (setq c-basic-offset 4)
   (setq tab-width 4)
   (setq indent-tabs-mode nil)
-)
+  )
 (add-hook 'c++-mode-hook 'ng-cc-style)
 
 
@@ -413,16 +413,16 @@
    ("C-c g x" . helm-git-grep)))
 
 ;; Theme config
-;(use-package monokai-theme
-;  :ensure t
-;  :config (load-theme 'monokai t))
+					;(use-package monokai-theme
+					;  :ensure t
+					;  :config (load-theme 'monokai t))
 
 (load-theme 'adwaita t)
 
 (use-package markdown-mode
   :defer t
   :mode ("\\.md\\'" . gfm-mode)
-  ;:init
+					;:init
   ;; Prevent ~1.7 second delay by avoiding `char-displayable-p'.  See
   ;; https://github.com/jrblevin/markdown-mode/issues/264
   ;;(setq markdown-url-compose-char ?∞)
@@ -552,9 +552,9 @@
   :ensure t
   :config
   (add-hook 'haskell-mode-hook (lambda ()
-                               (intero-mode)
-                               (hindent-mode)
-                               (setq hindent-reformat-buffer-on-save t))))
+				 (intero-mode)
+				 (hindent-mode)
+				 (setq hindent-reformat-buffer-on-save t))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
