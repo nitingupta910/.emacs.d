@@ -413,11 +413,12 @@
    ("C-c g x" . helm-git-grep)))
 
 ;; Theme config
-					;(use-package monokai-theme
-					;  :ensure t
+(use-package monokai-theme
+  :ensure t)
 					;  :config (load-theme 'monokai t))
 
-(load-theme 'adwaita t)
+					;(load-theme 'adwaita t)
+(load-theme 'monokai t)
 
 (use-package markdown-mode
   :defer t
@@ -564,7 +565,7 @@
  '(ediff-split-window-function (quote split-window-horizontally))
  '(package-selected-packages
    (quote
-    (esup simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
+    (monokai-theme esup simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
  '(split-height-threshold 200)
  '(split-width-threshold 0)
  '(tramp-remote-path (quote (tramp-own-remote-path)) nil (tramp)))
