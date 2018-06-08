@@ -242,6 +242,16 @@
   :config
   (simpleclip-mode 1))
 
+(defun my-put-file-name-on-clipboard ()
+  "Put the current file name on the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (simpleclip-set-contents filename)
+      (message filename))))
+
 ;;
 ;; END Generic settings
 ;;
@@ -421,7 +431,7 @@
 (load-theme 'monokai t)
 
 (use-package markdown-mode
-  :defer t
+  :ensure t
   :mode ("\\.md\\'" . gfm-mode)
 					;:init
   ;; Prevent ~1.7 second delay by avoiding `char-displayable-p'.  See
@@ -565,10 +575,10 @@
  '(ediff-split-window-function (quote split-window-horizontally))
  '(package-selected-packages
    (quote
-    (monokai-theme esup simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
+    (markdown-mode monokai-theme esup simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
  '(split-height-threshold 200)
  '(split-width-threshold 0)
- '(tramp-remote-path (quote (tramp-own-remote-path)) nil (tramp)))
+ '(tramp-remote-path (quote (tramp-own-remote-path))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
