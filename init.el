@@ -12,7 +12,7 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/"))
 
 (package-initialize)
 
@@ -51,7 +51,7 @@
 ;;(setq visible-bell t)
 (setq ring-bell-function 'ignore)
 
-					; disable autosave
+                                        ; disable autosave
 (setq auto-save-default nil)
 
 ;; configure backup file creation
@@ -68,7 +68,7 @@
 (global-auto-revert-mode)
 
 ;; ask before exiting emacs
-					;(setq confirm-kill-emacs 'y-or-n-p)
+                                        ;(setq confirm-kill-emacs 'y-or-n-p)
 
 ;; We don't want to type yes and no all the time so, do y and n
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -162,28 +162,52 @@
     (global-set-key (kbd "s-n") 'make-frame)
     (global-set-key (kbd "s-z") 'undo)
     (global-set-key (kbd "s-s")
-		    (lambda ()
-		      (interactive)
-		      (call-interactively (key-binding "\C-x\C-s"))))
+                    (lambda ()
+                      (interactive)
+                      (call-interactively (key-binding "\C-x\C-s"))))
     (global-set-key (kbd "s-f")
-		    (lambda ()
-		      (interactive)
-		      (call-interactively (key-binding "\C-s"))))
+                    (lambda ()
+                      (interactive)
+                      (call-interactively (key-binding "\C-s"))))
     (global-set-key (kbd "s-Z") 'undo-tree-redo)
     (global-set-key (kbd "C-s-f") 'toggle-frame-fullscreen)
     ;; Emacs sometimes registers C-s-f as this weird keycode
     (global-set-key (kbd "<C-s-268632070>") 'toggle-frame-fullscreen)))
 
-;; Indentation in C (Linux kernel style)
-(setq c-default-style "linux"
-      c-basic-offset 8)
-(setq c-backspace-function 'backward-delete-char)
-(add-hook 'c-mode-hook '(lambda ()
-			  (setq-default c-default-style "linux"
-					c-basic-offset 8
-					c-backspace-function 'backward-delete-char
-					tab-width 8
-					indent-tabs-mode t)))
+
+(defun my-c-mode-hook ()
+  "My c mode hook."
+
+  (setq c-basic-offset 4)
+  (setq c-offsets-alist '((substatement . 0)
+                          (substatement-open . 0)
+                          (statement-block-intro . +)
+                          (defun-block-intro . +)
+                          (arglist-cont-nonempty . +)))
+  (setq c-backspace-function 'backward-delete-char)
+  (setq tab-width 4)
+  (setq indent-tabs-mode nil)
+
+  ;; Prevent C-d to be bound to c-electric-delete-forward
+  (local-set-key (kbd "C-d") 'mc/mark-next-like-this)
+  )
+
+(defun my-c++-mode-hook()
+  (c-set-style "linux")
+  (c-set-offset 'innamespace '0)
+  (c-set-offset 'inextern-lang '0)
+  (c-set-offset 'inline-open '0)
+  (c-set-offset 'label '*)
+  (c-set-offset 'case-label '*)
+  (c-set-offset 'access-label '/)
+  (setq c-basic-offset 4)
+  (setq tab-width 4)
+  (setq indent-tabs-mode nil)
+  (local-set-key (kbd "C-d") 'mc/mark-next-like-this)
+  )
+
+(add-hook 'c-mode-hook 'my-c-mode-hook)
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
 
 (defun ng-get-ppi ()
   "Get display PPI.  Do not run this function in non-graphic mode."
@@ -194,8 +218,8 @@
   (setq ng-mm-height (nth 2 ng-mm-size))
 
   (setq ng-diag-mm (sqrt (+
-			  (expt ng-mm-width 2)
-			  (expt ng-mm-height 2))))
+                          (expt ng-mm-width 2)
+                          (expt ng-mm-height 2))))
 
   (setq ng-diag-inches (* ng-diag-mm 0.0393701))
 
@@ -204,8 +228,8 @@
   (setq ng-pixel-height (nth 4 ng-geom))
 
   (setq ng-diag-pixels (sqrt (+
-			      (expt ng-pixel-width 2)
-			      (expt ng-pixel-height 2))))
+                              (expt ng-pixel-width 2)
+                              (expt ng-pixel-height 2))))
 
   (/ ng-diag-pixels ng-diag-inches))
 
@@ -214,27 +238,27 @@
      (lambda()
        (setq ng-ppi (floor (ng-get-ppi)))
 
-					; mac air has ppi of 126.x
+                                        ; mac air has ppi of 126.x
        (if (<= ng-ppi 92)
-	   (setq ng-font-height 130)
-	 (if (<= ng-ppi 108)
-	     (setq ng-font-height 140)
-	   (if (<= ng-ppi 126)
-	       (setq ng-font-height 140)
-	     (setq ng-font-height 240))))
+           (setq ng-font-height 130)
+         (if (<= ng-ppi 108)
+             (setq ng-font-height 140)
+           (if (<= ng-ppi 126)
+               (setq ng-font-height 140)
+             (setq ng-font-height 240))))
 
        (if (eq system-type 'darwin)
-	   (setq ng-font-face "Menlo")
-	 (setq ng-font-face "Monospace"))
+           (setq ng-font-face "Menlo")
+         (setq ng-font-face "Monospace"))
 
 
-					; set larger font size on mac: say, 160 size becomes 232
+                                        ; set larger font size on mac: say, 160 size becomes 232
        (if (eq system-type 'darwin)
-	   (setq ng-font-height (floor (* 1.2 ng-font-height))))
+           (setq ng-font-height (floor (* 1.2 ng-font-height))))
 
        (set-face-attribute 'default nil
-			   :height (symbol-value 'ng-font-height)
-			   :font (symbol-value 'ng-font-face))
+                           :height (symbol-value 'ng-font-height)
+                           :font (symbol-value 'ng-font-face))
        )))
 
 
@@ -268,8 +292,8 @@
 (use-package multiple-cursors
   :ensure t
   :bind (("C-d" . mc/mark-next-like-this)
-	 ("C-S-d" . mc/mark-previous-like-this)
-	 ("C-c C-d" . mc/mark-all-like-this)))
+         ("C-S-d" . mc/mark-previous-like-this)
+         ("C-c C-d" . mc/mark-all-like-this)))
 
 (use-package buffer-move
   :ensure t
@@ -346,7 +370,7 @@
          :map helm-map
          ([tab] . helm-execute-persistent-action) ; rebind tab to do persistent action
          ("C-i" . helm-execute-persistent-action) ; make TAB works in terminal
-	 ("C-c g g" . helm-git-grep-from-helm)))
+         ("C-c g g" . helm-git-grep-from-helm)))
 
 (use-package projectile
   :ensure t
@@ -372,7 +396,7 @@
   :init
   (setq
    helm-gtags-ignore-case t
-					;helm-gtags-auto-update t
+                                        ;helm-gtags-auto-update t
    helm-gtags-use-input-at-cursor t
    helm-gtags-pulse-at-cursor t
    helm-gtags-prefix-key "\C-cg"
@@ -390,31 +414,6 @@
   (add-hook 'c++-mode-hook 'helm-gtags-mode)
   (add-hook 'asm-mode-hook 'helm-gtags-mode))
 
-(add-hook 'c-mode-hook 'my-c-mode-hook)
-(add-hook 'c++-mode-hook 'my-c++-mode-hook)
-
-					; Prevent C-d to be bound to c-electric-delete-forward
-(defun my-c-mode-hook ()
-  (local-set-key (kbd "C-d") 'mc/mark-next-like-this))
-
-(defun my-c++-mode-hook ()
-  (local-set-key (kbd "C-d") 'mc/mark-next-like-this))
-
-(defun ng-cc-style()
-  (c-set-style "linux")
-  (c-set-offset 'innamespace '0)
-  (c-set-offset 'inextern-lang '0)
-  (c-set-offset 'inline-open '0)
-  (c-set-offset 'label '*)
-  (c-set-offset 'case-label '*)
-  (c-set-offset 'access-label '/)
-  (setq c-basic-offset 4)
-  (setq tab-width 4)
-  (setq indent-tabs-mode nil)
-  )
-(add-hook 'c++-mode-hook 'ng-cc-style)
-
-
 (use-package helm-git-grep
   :ensure t
   :bind
@@ -425,15 +424,15 @@
 ;; Theme config
 (use-package monokai-theme
   :ensure t)
-					;  :config (load-theme 'monokai t))
+                                        ;  :config (load-theme 'monokai t))
 
-					;(load-theme 'adwaita t)
+                                        ;(load-theme 'adwaita t)
 (load-theme 'monokai t)
 
 (use-package markdown-mode
   :ensure t
   :mode ("\\.md\\'" . gfm-mode)
-					;:init
+                                        ;:init
   ;; Prevent ~1.7 second delay by avoiding `char-displayable-p'.  See
   ;; https://github.com/jrblevin/markdown-mode/issues/264
   ;;(setq markdown-url-compose-char ?∞)
@@ -489,9 +488,9 @@
   :ensure t
   :config
   (add-hook 'elixir-mode-hook
-	    (lambda()
-	      (company-mode)
-	      ))
+            (lambda()
+              (company-mode)
+              ))
   :init
   (setq
    alchemist-mix-env "prod"
@@ -543,12 +542,12 @@
   :ensure t
   :config
   (add-hook 'scss-mode-hook
-	    (lambda()
-	      (flycheck-mode)
-	      (setq css-indent-offset 2)
-	      (company-mode)
-	      (company-css)
-	      )))
+            (lambda()
+              (flycheck-mode)
+              (setq css-indent-offset 2)
+              (company-mode)
+              (company-css)
+              )))
 
 (use-package coffee-mode
   :commands coffee-mode
@@ -563,9 +562,9 @@
   :ensure t
   :config
   (add-hook 'haskell-mode-hook (lambda ()
-				 (intero-mode)
-				 (hindent-mode)
-				 (setq hindent-reformat-buffer-on-save t))))
+                                 (intero-mode)
+                                 (hindent-mode)
+                                 (setq hindent-reformat-buffer-on-save t))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -573,6 +572,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ediff-split-window-function (quote split-window-horizontally))
+ '(indent-tabs-mode nil)
  '(package-selected-packages
    (quote
     (markdown-mode monokai-theme esup simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
