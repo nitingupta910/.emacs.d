@@ -440,8 +440,16 @@
   ;;(setq markdown-hr-display-char ?─)
   ;;(setq markdown-definition-display-char ?⁘))
   )
+;(add-hook 'markdown-mode-hook
+;          (lambda ()
+;            (load-theme 'whiteboard t)
+;            (enable-theme 'whiteboard)))
+
 
 (use-package magit
+  :ensure t)
+
+(use-package p4
   :ensure t)
 
 (use-package flycheck
@@ -575,7 +583,7 @@
  '(indent-tabs-mode nil)
  '(package-selected-packages
    (quote
-    (markdown-mode monokai-theme esup simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
+    (p4 markdown-mode monokai-theme esup simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
  '(split-height-threshold 200)
  '(split-width-threshold 0)
  '(tramp-remote-path (quote (tramp-own-remote-path))))
