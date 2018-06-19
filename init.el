@@ -429,6 +429,9 @@
                                         ;(load-theme 'adwaita t)
 (load-theme 'monokai t)
 
+(use-package fish-mode
+  :ensure t)
+
 (use-package markdown-mode
   :ensure t
   :mode ("\\.md\\'" . gfm-mode)
@@ -583,7 +586,7 @@
  '(indent-tabs-mode nil)
  '(package-selected-packages
    (quote
-    (p4 markdown-mode monokai-theme esup simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
+    (fish-mode p4 markdown-mode monokai-theme esup simpleclip helm use-package smooth-scrolling projectile popup helm-core)))
  '(split-height-threshold 200)
  '(split-width-threshold 0)
  '(tramp-remote-path (quote (tramp-own-remote-path))))
