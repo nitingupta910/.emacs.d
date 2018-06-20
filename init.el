@@ -421,6 +421,9 @@
    :map isearch-mode-map
    ("C-c g x" . helm-git-grep)))
 
+(use-package cuda-mode
+  :ensure t)
+
 ;; Theme config
 (use-package monokai-theme
   :ensure t)
