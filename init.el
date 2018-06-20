@@ -208,6 +208,7 @@
 
 (add-hook 'c-mode-hook 'my-c-mode-hook)
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
+(add-hook 'cuda-mode-hook 'my-c++-mode-hook)
 
 (defun ng-get-ppi ()
   "Get display PPI.  Do not run this function in non-graphic mode."
