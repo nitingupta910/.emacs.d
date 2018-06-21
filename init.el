@@ -208,6 +208,7 @@
 
 (add-hook 'c-mode-hook 'my-c-mode-hook)
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
+(add-hook 'cuda-mode-hook 'my-c++-mode-hook)
 
 (defun ng-get-ppi ()
   "Get display PPI.  Do not run this function in non-graphic mode."
@@ -421,6 +422,9 @@
   (("C-c g x" . helm-git-grep)
    :map isearch-mode-map
    ("C-c g x" . helm-git-grep)))
+
+(use-package cuda-mode
+  :ensure t)
 
 ;; Theme config
 (use-package monokai-theme
