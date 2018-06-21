@@ -315,7 +315,8 @@
   :config
   (push "HISTFILE" exec-path-from-shell-variables)
   (setq exec-path-from-shell-check-startup-files nil)
-  (exec-path-from-shell-initialize))
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
 
 ;;
 ;; Helm stuff
