@@ -252,6 +252,7 @@
            (setq ng-font-face "Menlo")
          (setq ng-font-face "Monospace"))
 
+       (setq ng-font-height 120)
 
                                         ; set larger font size on mac: say, 160 size becomes 232
        (if (eq system-type 'darwin)
